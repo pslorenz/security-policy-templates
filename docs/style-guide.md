@@ -14,8 +14,6 @@ The library uses Markdown as the canonical format. Documents render in GitHub's 
 
 **Code blocks.** Used in runbooks for executable commands. Triple-backtick fenced code blocks with language identifiers (`powershell`, `bash`, `python`) for syntax highlighting in GitHub's renderer.
 
-**Bullet lists.** Used for genuinely parallel enumerated content. Each bullet should stand on its own as a complete thought. Sub-bullets are allowed but discouraged beyond one level of nesting.
-
 **Bold and italic emphasis.** Bold for term introduction within a paragraph (the first appearance of a defined term, the role name in a roles-and-responsibilities section). Italic for document titles when referenced inline, and for the closing attribution line at the end of each document. Neither used for emphasis within sentences; sentence construction should carry the emphasis.
 
 **Blockquotes.** Used for direct quotation from external sources only, with full citation. Not used as a styling device for callouts.
@@ -24,9 +22,11 @@ The library uses Markdown as the canonical format. Documents render in GitHub's 
 
 These rules are enforced consistently across every document in the library.
 
-**No hedging filler.** Phrases like "it is important to note that," "it should be observed that," "as we will see," and "in many ways" add words without adding meaning. Cut them. The reader should note what is important without being told to note it.
+**No "shall."** Requirements use "must" or plain indicative phrasing ("Privileged accounts use phishing-resistant authentication").
 
-**No empty intensifiers.** "Very," "really," "extremely," "incredibly," and similar add no information. Either the underlying claim is strong enough to stand without them or the underlying claim needs to be made stronger.
+**Vendor neutrality.** Placeholders and examples name a category of tool ("[APPROVED_EDR_PLATFORMS, e.g., an EDR platform with behavioral detection and remote isolation]"), never products. Platform names (Microsoft 365, Google Workspace, Azure, AWS, GCP) and their native feature names appear only where a provision or procedure is specific to that platform.
+
+**Claims carry their basis.** Statistics and threat claims are either sourced or phrased as practitioner observation. Unsourced figures presented as fact are removed.
 
 **No corporate-speak.** "Leverage," "synergy," "best-in-class," "world-class," "robust," "seamless," and similar are flagged as voice violations. Use the plain word: use, work together, good, well-built, smooth.
 
@@ -53,6 +53,8 @@ Each document type follows a consistent structure. The structure is documented h
 9. Section 8: Revision History
 10. Closing attribution line
 
+**Closing lines.** Policies, standards, runbooks, and addenda end with an italic authority statement ("This policy is issued under the authority of the executive sponsor listed above.") followed, as a separate line, by the standard attribution line given in CONTRIBUTING.md. Templates and client-facing documents end with the attribution line alone. The attribution line tells adopters they may remove it, and the generator removes it by default, so it must be worded exactly as given and kept on its own line.
+
 **Runbook documents** (RUN-xxx-nnn) follow this structure:
 
 1. Title and metadata table at the top
@@ -66,7 +68,11 @@ Each document type follows a consistent structure. The structure is documented h
 9. Section 8: Revision History
 10. Closing attribution line
 
-**Recurring control templates** (REV-xxx-nnn) are XLSX or DOCX files. They follow the structure documented in their accompanying explainer or in the customization guide.
+**Standards** (STD-xxx-nnn) follow the policy structure, with Section 3 titled "Standard Requirements" instead of "Policy Statements." A standard carries the technical specifics a policy points to, such as password length, log retention, or federation protocols.
+
+**Templates** (TPL-xxx-nnn) are Markdown forms, registers, inventories, and reports that produce evidence of a control running over time. Each opens with a metadata table naming the document it supports, then a "How to use this template" section, then the form itself. Tables carry the recorded data; prose explains how to fill them in.
+
+**Framework addenda** (ADD-xxx-nnn) live in `addenda/`. They follow the standard structure with these sections: Purpose and Status (including a validation note when the framework is changing), How to Use, Coverage by family or category, Additional Provisions, Overrides of Library Defaults, Assessment Readiness, Related Documents, and Revision History. An addendum is additive: within its scope it governs where it differs from a library document, and outside its scope it has no effect.
 
 **Client-facing materials** are short documents (typically under fifteen hundred words) with minimal internal structure. They are written for non-technical readers and use plainer language than the policies and runbooks. They do not follow the numbered-section convention.
 
@@ -77,10 +83,11 @@ Document IDs follow the pattern `[TYPE]-[FAMILY]-[NUMBER]`, where:
 **Type** is a three-letter code identifying the document category:
 - POL: Policy
 - RUN: Runbook
-- STD: Standard (a policy-adjacent document with more specific technical detail)
-- REV: Recurring review or control evidence template
+- STD: Standard (technical requirements that implement a policy; see Document structure conventions)
+- TPL: Template (registers, inventories, review worksheets, and reports that produce control evidence)
 - PLY: Incident response playbook
 - GUI: Guide (longer-form explanatory content)
+- ADD: Framework addendum (supplements the library for a specific regulation or framework; the family code names the framework)
 
 **Family** is a two-to-four-letter code identifying the topical area:
 - IAM: Identity and Access Management
@@ -91,15 +98,24 @@ Document IDs follow the pattern `[TYPE]-[FAMILY]-[NUMBER]`, where:
 - EP: Endpoint Protection
 - NET: Network Security
 - AUP: Acceptable Use
-- GRC: Governance, Risk, and Compliance
+- GOV: Governance (the program-level policy, risk management, exceptions, and metrics)
 - AI: Artificial Intelligence and Agent Governance
+- LOG: Logging and Monitoring
+- DR: Data Backup and Recovery
+- DEV: Secure Development
+- OPS: Operations (change management and related operational standards)
+- BC: Business Continuity
+- PPS: Physical and Personnel Security
+- Framework codes for addenda (ADD type only): CMMC, HIPAA, PCI, SOC2, and similar
 - TPRM: Third-Party Risk Management
 
-**Number** is a sequential integer within the family, zero-padded to three digits.
+**Number** is a sequential integer, zero-padded to three digits, that runs from 001 within each combination of type and family. The policies in the IAM family are POL-IAM-001, POL-IAM-002, and POL-IAM-003; its standards are STD-IAM-001 and STD-IAM-002; the governance templates are TPL-GOV-001 through TPL-GOV-004.
 
-Examples: POL-IAM-001, POL-IAM-002, POL-IAM-011, RUN-IAM-011, REV-IAM-011, POL-AI-001.
+Examples: POL-IAM-001, POL-IAM-003, STD-IAM-001, RUN-IAM-001, TPL-GOV-004, POL-AI-001.
 
-The number is sequential within the family, not sequential within the type. POL-IAM-011 and RUN-IAM-011 are paired (the runbook operationalizes the policy), so they share the trailing number even though they have different type prefixes.
+A new document takes the next unused number for its type and family. Numbers are not reserved in advance for topics that may never be written, and a number retired after a release is not reused, so that an adopter's references never silently point at a different document.
+
+Numbers do not encode relationships. A runbook or template names the document it supports in its metadata table (the Related Policy or Supports row), and the cross-reference matrix records the relationship. RUN-IAM-001 operationalizes POL-IAM-003, and TPL-GOV-002 supports POL-GOV-001, without either sharing its parent's number.
 
 ## Placeholder convention
 
@@ -114,11 +130,11 @@ Standard placeholders used across the library:
 - `[REVIEW_DATE]`: The date the document is next scheduled for review
 - `[VERSION]`: The version number of the adopting organization's instance of the document
 
-Document-specific placeholders use a descriptive name in the same format. The `docs/customization-guide.md` document lists every placeholder used in every artifact in the pack.
+Document-specific placeholders use a descriptive name in the same format. The `docs/customization-guide.md` document lists every document-specific placeholder and the documents that use it.
 
 ## Cross-references
 
-Documents reference one another by document ID. The reference format is consistent across the library: `POL-IAM-011 Section 3.6` or simply `POL-IAM-011` when referring to the document as a whole. The `docs/cross-reference-matrix.md` document tracks every cross-reference and provides the basis for ensuring consistency when document IDs or section numbers change.
+Documents reference one another by document ID. The reference format is consistent across the library: `POL-IAM-003 Section 3.6` or simply `POL-IAM-003` when referring to the document as a whole. The `docs/cross-reference-matrix.md` document tracks every cross-reference and provides the basis for ensuring consistency when document IDs or section numbers change.
 
 When a referenced document does not exist in the adopting organization's library (because they have not adopted it, or because they use a different document for the same purpose), the consumer is expected to update the reference during customization. The customization guide describes the process.
 
@@ -126,7 +142,7 @@ When a referenced document does not exist in the adopting organization's library
 
 Every document includes a revision history table at the bottom. The table tracks the version number, the date, the author of the revision, and a brief description of the change. The revision history is the consumer's record of how their adopted instance has evolved, separate from the upstream library's release history.
 
-When a consumer adopts a document from this library, the recommended practice is to begin a fresh revision history starting at version 1.0 with the adoption date and a description noting the source ("Adopted from `github.com/pslorenz/security-policy-templates` v[X.Y]"). This preserves the upstream attribution while creating a clean local history.
+When a consumer adopts a document from this library, the recommended practice is to begin a fresh revision history starting at version 1.0 with the adoption date.
 
 ## Voice violations to watch for
 
@@ -137,6 +153,8 @@ Contributors and consumers should self-check against this list before publishing
 - Empty intensifiers ("very," "really," "extremely")
 - Cross-references to documents that do not exist in the library or that use the wrong document ID
 - Placeholders that have been filled in with example values rather than left as bracketed placeholders for the consumer
+- Product names in placeholders or examples
+- Unsourced statistics
 
 A consistent application of these rules is what makes the library feel like a professional product rather than a collection of documents.
 

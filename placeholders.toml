@@ -1,0 +1,631 @@
+# Placeholder registry
+#
+# Every placeholder used in the library's documents is listed here. This file is the
+# source of truth: scripts/check_library.py fails if a document uses a placeholder that
+# is not registered, or if a registered placeholder is no longer used, and
+# scripts/generate.py uses the phase to decide what to substitute.
+#
+# phase = "adoption"  filled once, when the library is customized for an organization
+# phase = "use"       filled each time a template or message is used; generate.py never
+#                     substitutes these
+#
+# section and question (adoption-time placeholders) place the placeholder in the intake
+# questionnaire, docs/intake-questionnaire.md. default (optional) supplies a value when the
+# client config gives none; placeholders with a default are not asked in the questionnaire.
+#
+# group (optional) collects related placeholders into one row of the customization guide's
+# placeholder table. The table is generated from this file: python3 scripts/generate.py --update-guide,
+# which also regenerates the intake questionnaire
+
+[AI_TOOL_NAME_AND_TIER]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[AI_TOOL_REQUEST_CHANNEL]
+phase = "adoption"
+description = "Where users request a new AI tool"
+section = "people"
+question = "How should staff ask for a new AI tool to be approved?"
+
+[ALTERNATE_LOCATION]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[AMOUNT]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[ANNUAL_ACKNOWLEDGMENT_MONTH]
+phase = "adoption"
+description = "When the annual policy acknowledgment is due"
+section = "people"
+question = "In which month each year should everyone re-acknowledge the policies?"
+
+[APPLICABLE_OBLIGATIONS]
+phase = "adoption"
+description = "Laws, regulations, and contracts that impose security obligations"
+section = "organization"
+question = "Which laws, regulations, contracts, or insurance requirements impose security obligations on you? List each one."
+
+[APPROVED_AI_TOOLS]
+phase = "adoption"
+description = "AI tools approved for company data, with the classifications each is approved for"
+section = "it"
+question = "Which AI tools are approved for company data, and for which kinds of data?"
+
+[APPROVED_BROWSERS]
+phase = "adoption"
+description = "Browsers approved for company work"
+section = "it"
+question = "Which web browsers are approved?"
+
+[APPROVED_DNS_FILTERING]
+phase = "adoption"
+description = "Protective DNS service"
+section = "it"
+question = "Which service blocks known-malicious websites, on and off the office network?"
+
+[APPROVED_EDR_PLATFORMS]
+phase = "adoption"
+description = "EDR platform in use"
+section = "it"
+question = "Which endpoint detection and response (EDR) service protects your computers?"
+
+[APPROVED_FIREWALL_VENDORS]
+phase = "adoption"
+description = "Edge firewall platforms"
+section = "it"
+question = "Which firewalls protect your office network, if you have one?"
+
+[APPROVED_IDP]
+phase = "adoption"
+description = "The single approved identity provider"
+section = "it"
+question = "Which service do people sign in with for email and business applications?"
+
+[APPROVED_MDM_PLATFORMS]
+phase = "adoption"
+description = "Mobile device management platform"
+section = "it"
+question = "Which service manages your laptops and phones?"
+
+[APPROVED_PASSWORD_MANAGERS]
+phase = "adoption"
+description = "Business password manager"
+section = "it"
+question = "Which password manager do staff use?"
+
+[APPROVED_REMOTE_ACCESS_TOOLS]
+phase = "adoption"
+description = "Identity-gated access service"
+section = "it"
+question = "How do people reach internal systems from outside the office, if there are any internal systems?"
+
+[APPROVED_SECRETS_PLATFORMS]
+phase = "adoption"
+description = "Secrets vaults for non-human credentials"
+section = "it"
+question = "Where are passwords and keys for service accounts and integrations stored?"
+
+[APPROVED_STORAGE_PLATFORMS]
+phase = "adoption"
+description = "Approved storage for Confidential data"
+section = "it"
+question = "Where may company files be stored?"
+
+[APPROVED_VENDOR_MONITORING]
+phase = "adoption"
+description = "Vendor breach or ratings monitoring, if any"
+section = "it"
+question = "How do you hear about security problems at your vendors?"
+
+[APPROVED_VM_TOOLS]
+phase = "adoption"
+description = "Vulnerability discovery tools"
+section = "it"
+question = "Which tools find missing patches and vulnerabilities?"
+
+[ARCHIVE_RESTORE_TIME]
+phase = "adoption"
+description = "How quickly archived logs can be restored for an investigation"
+section = "monitoring"
+question = "How quickly can archived logs be restored for an investigation?"
+
+[AUP_VERSION]
+phase = "adoption"
+group = "policy-versions"
+description = "The policy versions being acknowledged, updated when either policy changes"
+default = "1.0"
+
+[BACKUP_PLATFORM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[BACKUP_VENDOR]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[BRIEF_DESCRIPTION]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[CENTRAL_LOGGING_PLATFORM]
+phase = "adoption"
+description = "The central logging or SIEM platform"
+section = "monitoring"
+question = "Where are security logs collected and kept?"
+
+[CHANGES]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[CHANGE_RECORD_RETENTION]
+phase = "adoption"
+description = "How long change records are retained"
+section = "it"
+question = "How long are change records kept?"
+
+[CHANGE_RECORD_SYSTEM]
+phase = "adoption"
+description = "Where change records are kept"
+section = "it"
+question = "Where are changes to systems recorded?"
+
+[CHANGE_WINDOW]
+phase = "adoption"
+description = "When higher-risk normal changes are made"
+section = "it"
+question = "When are higher-risk changes scheduled?"
+
+[CLASSIFICATION]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[CLIENT_EXPECTATIONS]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[CONTACT]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[CONTINUITY_DEPUTY]
+phase = "adoption"
+description = "Who acts when the continuity lead is unavailable"
+section = "roles"
+question = "Who acts for the continuity lead when they cannot be reached? (Name and title.)"
+
+[CONTINUITY_ESCALATION_TIME]
+phase = "adoption"
+description = "How long to wait for the lead or deputy before the senior manager acts"
+section = "roles"
+question = "If neither the continuity lead nor the deputy can be reached, how long should staff wait before the most senior available manager takes over?"
+
+[CONTINUITY_LEAD]
+phase = "adoption"
+description = "Who declares and manages a continuity event"
+section = "roles"
+question = "Who declares and manages a business disruption, such as losing the office or a key system? (Name and title.)"
+
+[CONTRACT_REVIEW_PROCESS]
+phase = "adoption"
+description = "Reference to the organization's contract review process"
+section = "people"
+question = "How are contracts with vendors reviewed before signing?"
+
+[CRITICAL_RPO]
+phase = "adoption"
+description = "Default recovery point objective for Critical systems"
+section = "recovery"
+question = "For your most critical systems, how much data, measured in time, could you afford to lose?"
+
+[CRITICAL_RTO]
+phase = "adoption"
+description = "Default recovery time objective for Critical systems"
+section = "recovery"
+question = "For your most critical systems, how long could the business operate without them?"
+
+[CRITICAL_SYSTEM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[CUI_PASSWORD_COMPLEXITY]
+phase = "adoption"
+description = "Password complexity rule for CUI accounts"
+section = "cmmc"
+question = "What password complexity rule applies to accounts in the CUI environment?"
+
+[CUI_PASSWORD_HISTORY]
+phase = "adoption"
+description = "Number of previous passwords that cannot be reused in the CUI environment"
+section = "cmmc"
+question = "How many previous passwords may not be reused in the CUI environment?"
+
+[CUI_SCOPE_DOCUMENT]
+phase = "adoption"
+description = "Where the CUI environment scope is recorded"
+section = "cmmc"
+question = "Where is the scope of your CUI environment documented?"
+
+[CUI_SCREENING_PROCESS]
+phase = "adoption"
+description = "Personnel screening process before CUI access"
+section = "cmmc"
+question = "What additional screening applies before someone gets access to CUI?"
+
+[CYBER_INSURANCE_DOCUMENTATION]
+phase = "adoption"
+description = "Where the carrier and policy details are kept"
+section = "incident"
+question = "Where are your cyber insurance policy and the insurer's claims contact kept?"
+
+[DAILY_RETENTION]
+phase = "adoption"
+description = "How long daily backups are kept"
+section = "recovery"
+question = "How long should daily backups be kept?"
+
+[DATE]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[DEVICE_RETENTION]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[DMARC_ENFORCEMENT_TIMELINE]
+phase = "adoption"
+description = "Target time to reach DMARC p=reject"
+section = "it"
+question = "How long do you expect it to take to fully enforce email authentication (DMARC) on your domains?"
+
+[DNS_SERVICE]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[EDR_PLATFORM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[EFFECTIVE_DATE]
+phase = "adoption"
+description = "Date the adopted documents take effect (YYYY-MM-DD)"
+section = "organization"
+question = "On what date should the documents take effect? (YYYY-MM-DD)"
+
+[EMAIL_SECURITY_GATEWAY]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[ESTIMATED_PROGRAM_COST]
+phase = "adoption"
+group = "program-cost"
+description = "Program cost and duration for the adopting environment"
+section = "explainers"
+question = "What is the estimated first-year cost of the program, for the business owner explainers?"
+
+[EXECUTIVE_SPONSOR]
+phase = "adoption"
+description = "Executive who approves the documents and owns the program"
+section = "roles"
+question = "Which executive approves these documents and owns the security program? (Name and title.)"
+
+[FIREWALL]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[FUNCTION]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[GOV_VERSION]
+phase = "adoption"
+group = "policy-versions"
+description = "The policy versions being acknowledged, updated when either policy changes"
+default = "1.0"
+
+[IMPORTANT_RPO]
+phase = "adoption"
+description = "Default recovery point objective for Important systems"
+section = "recovery"
+question = "For important but not critical systems, how much data, measured in time, could you afford to lose?"
+
+[IMPORTANT_RTO]
+phase = "adoption"
+description = "Default recovery time objective for Important systems"
+section = "recovery"
+question = "For important but not critical systems, how long could the business operate without them?"
+
+[INCIDENT_LEAD]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[INCIDENT_LEAD_NAME]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[INCIDENT_RESPONSE_RETAINER_FIRM]
+phase = "adoption"
+description = "Retained incident response firm"
+section = "incident"
+question = "Which incident response firm would you call for a serious incident? (Check your cyber insurance policy first; many require a firm from the insurer's panel.)"
+
+[INCIDENT_SUMMARIES]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[INFORMATION_SECURITY_FUNCTION]
+phase = "adoption"
+description = "Who performs the Information Security function"
+section = "roles"
+question = "Who performs the Information Security function: an internal person or role, an outside provider, or both?"
+
+[INSTRUCTIONS]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[IT_FUNCTION_NAME]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[IT_SUPPORT_CONTACT]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[LOG_TIME_ZONE]
+phase = "adoption"
+description = "Time zone used for all log timestamps"
+section = "monitoring"
+question = "Which time zone should all log timestamps use? (UTC is recommended.)"
+
+[MEETING_RECORD_RETENTION]
+phase = "adoption"
+description = "Retention period for meeting transcripts and AI summaries"
+section = "people"
+question = "How long should meeting recordings, transcripts, and AI summaries be kept?"
+
+[METHOD]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[MONITORING_COVERAGE]
+phase = "adoption"
+description = "Hours of alert monitoring coverage"
+section = "monitoring"
+question = "During which hours are alerts watched, and what happens outside those hours?"
+
+[MONITORING_PROVIDER]
+phase = "adoption"
+description = "Who monitors and triages alerts"
+section = "monitoring"
+question = "Who watches security alerts and responds to them?"
+
+[MONTHLY_RETENTION]
+phase = "adoption"
+description = "How long monthly backups are kept"
+section = "recovery"
+question = "How long should monthly backups be kept?"
+
+[NAME]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[NHI_ID]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[ORGANIZATION_GOVERNANCE_BODY]
+phase = "adoption"
+description = "The body the executive sponsor reports to on security"
+section = "roles"
+question = "Who does the executive sponsor report to on security: owners, a board, partners, or no one?"
+
+[ORGANIZATION_NAME]
+phase = "adoption"
+description = "Legal or trading name of the organization"
+section = "organization"
+question = "What is your organization's legal or trading name, as it should appear in the documents?"
+
+[PAYMENT_APPROVAL_THRESHOLD]
+phase = "adoption"
+description = "Payment amount above which two approvers are required"
+section = "finance"
+question = "Above what payment amount should two people approve before money moves?"
+
+[PAYMENT_HANDLING_PROCESS]
+phase = "adoption"
+description = "Where payment card handling is documented"
+section = "finance"
+question = "Where is your process for handling card payments documented, if you take them?"
+
+[PAYMENT_INCIDENT_THRESHOLD]
+phase = "adoption"
+description = "Payment amount above which an unverified payment-detail change is handled as an incident"
+section = "finance"
+question = "If a vendor's bank details are changed without the required callback, above what payment amount is that treated as a security incident? (Often the same as the approval threshold.)"
+
+[PHONE]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[PLATFORM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[POLICY_OWNER]
+phase = "adoption"
+description = "Person or role that owns the documents"
+section = "roles"
+question = "Who maintains these documents day to day? (Name or role.)"
+
+[PRODUCTIVITY_PLATFORM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[QUARTER_YEAR]
+phase = "use"
+description = "The quarter being reviewed or reported, filled in each quarter"
+
+[REPORTING_CHANNEL]
+phase = "adoption"
+description = "Where users report security problems"
+section = "people"
+question = "Where should staff report a security problem, such as a suspicious email or a lost device?"
+
+[REPORT_PHISHING_PROCESS]
+phase = "adoption"
+description = "How users report suspected phishing"
+section = "people"
+question = "How do staff report a suspected phishing email?"
+
+[RISK_APPETITE_STATEMENT]
+phase = "adoption"
+description = "The executive sponsor's risk appetite statement"
+section = "organization"
+question = "In two or three sentences, how much risk is the organization willing to accept, and where is it least willing?"
+
+[SAAS_APPLICATION]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[SCREENING_PROCESS]
+phase = "adoption"
+description = "Where the pre-access screening process is documented"
+section = "people"
+question = "Where is your process for screening new hires before they get access documented? (Your HR provider can usually answer this.)"
+
+[SECURITY_LEGAL_COUNSEL]
+phase = "adoption"
+description = "Counsel for security matters"
+section = "incident"
+question = "Which lawyer or firm advises you on security incidents and breach notification?"
+
+[SERVICE]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[STANDARD_RPO]
+phase = "adoption"
+description = "Default recovery point objective for Standard systems"
+section = "recovery"
+question = "For everything else, how much data, measured in time, could you afford to lose?"
+
+[SUMMARY]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[TARGET]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"
+
+[TESTING_TIER]
+phase = "adoption"
+description = "The security testing tier set under STD-VM-001 Section 3.1"
+section = "it"
+question = "Which security testing tier applies: Baseline, Standard, or Expanded? (The scope answers in Part 1 usually decide this; see STD-VM-001 Section 3.1.)"
+
+[TIME]
+phase = "use"
+group = "message-fields"
+description = "Values filled in when a communication template is used, not at adoption"
+
+[TIMELINE_WEEKS]
+phase = "adoption"
+group = "program-cost"
+description = "Program cost and duration for the adopting environment"
+section = "explainers"
+question = "How many weeks will initial setup take, for the business owner explainers?"
+
+[TIME_SOURCE]
+phase = "adoption"
+description = "Authoritative time sources for logging systems"
+section = "monitoring"
+question = "Where do your systems get their time from?"
+
+[VALIDATION_PERIOD]
+phase = "adoption"
+description = "How long new log sources are validated before being relied on"
+section = "monitoring"
+question = "How long should a new log source be watched for gaps before it is relied on?"
+
+[VENDOR]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[VENDOR_RETENTION]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[VISITOR_LOG_RETENTION]
+phase = "adoption"
+description = "How long visitor records are kept"
+section = "people"
+question = "How long should you keep records of office visitors?"
+
+[VM_PLATFORM]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[VPN_GATEWAY]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[VULNERABILITY_DISCLOSURE_CHANNEL]
+phase = "adoption"
+description = "Address or form for external vulnerability reports"
+section = "it"
+question = "Where should outside researchers report security problems they find in your systems?"
+
+[WEB_GATEWAY]
+phase = "use"
+group = "seed-rows"
+description = "Seed-row placeholders; replace with real entries during the first pass through the template"
+
+[WEEKLY_RETENTION]
+phase = "adoption"
+description = "How long weekly backups are kept"
+section = "recovery"
+question = "How long should weekly backups be kept?"
+
+[WHAT_HAPPENED]
+phase = "use"
+group = "fill-in"
+description = "Template fill-in fields, completed each time the template is used"

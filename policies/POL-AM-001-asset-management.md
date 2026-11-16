@@ -16,9 +16,9 @@
 
 This policy defines how [ORGANIZATION_NAME] tracks the things it owns, uses, and depends on. That includes computers, servers, network equipment, software, cloud platforms, SaaS applications, and the data that lives across all of them.
 
-The reason this matters is straightforward. You cannot protect what you do not know you have. The vast majority of preventable security incidents start with an asset that nobody was actively managing. The forgotten server, the SaaS tool a department signed up for two years ago, the laptop that never got returned, the cloud subscription a former employee created. Each of these becomes a problem because nothing was tracking them.
+The reason this matters is straightforward. You cannot protect what you do not know you have. Many preventable security incidents start with an asset that nobody was actively managing. The forgotten server, the SaaS tool a department signed up for two years ago, the laptop that never got returned, the cloud subscription a former employee created. Each of these becomes a problem because nothing was tracking them.
 
-The goal of asset management is not to maintain a perfect catalog. It is to make sure every asset has someone responsible for it, that the security program reaches every asset, and that nothing falls through the cracks.
+The goal of asset management is to make sure every asset has someone responsible for it, that the security program reaches every asset, and that nothing falls through the cracks. A perfect catalog is not required to get there.
 
 ## 2. Scope
 
@@ -30,9 +30,9 @@ This policy covers all assets that [ORGANIZATION_NAME] owns, leases, subscribes 
 
 **Cloud and SaaS assets**: Microsoft 365 or Google Workspace tenants, cloud platform subscriptions (Azure, AWS, GCP), SaaS applications used for company work (CRM, accounting, HR, project management, file sharing, anything else), and any service [ORGANIZATION_NAME] pays for or uses to operate the business.
 
-**Data assets**: company data wherever it lives, including in cloud platforms, SaaS applications, on-premises servers, endpoints, and backup systems. The data classification policy ([DATA_CLASSIFICATION_POLICY], forthcoming) covers data handling requirements; this policy covers tracking where data lives.
+**Data assets**: company data wherever it lives, including in cloud platforms, SaaS applications, on-premises servers, endpoints, and backup systems. The data classification policy (POL-DC-001) covers data handling requirements; this policy covers tracking where data lives.
 
-**Identity assets**: user accounts and non-human identities. POL-IAM-001 (Access Control Policy) and POL-IAM-011 (Non-Human Identity Governance Policy) cover identity governance specifically; this policy ensures identities are part of the broader asset view.
+**Identity assets**: user accounts and non-human identities. POL-IAM-001 (Access Control Policy) and POL-IAM-003 (Non-Human Identity Governance Policy) cover identity governance specifically; this policy ensures identities are part of the broader asset view.
 
 The scope intentionally includes assets that [ORGANIZATION_NAME] does not own outright. A SaaS subscription is an asset even though the underlying software is not owned. A cloud-hosted server is an asset even though the hardware is not owned. The test is whether [ORGANIZATION_NAME] depends on it for business operations.
 
@@ -58,7 +58,7 @@ When the named owner leaves [ORGANIZATION_NAME] or changes roles, ownership is r
 
 For hardware, the sources of truth are:
 
-The endpoint detection and response (EDR) platform, which sees every managed device. The remote management and monitoring (RMM) platform, where used. The Microsoft Entra device list, the Intune or equivalent device management system, and the network access control system if one is in place.
+The endpoint detection and response (EDR) platform, which sees every managed device. The remote management and monitoring (RMM) platform, where used. The identity provider's device list, the device management system, and the network access control system if one is in place. Network discovery (an active discovery scan, DHCP server logs, or passive network monitoring), which finds the devices that carry no agent: printers, cameras, network equipment, and anything plugged in without going through provisioning.
 
 For software, the sources are:
 
@@ -66,7 +66,7 @@ The endpoint management platform's inventory of installed applications. The lice
 
 For cloud and SaaS assets, the sources are:
 
-The cloud platform's resource inventory APIs (Azure Resource Graph, AWS Config, GCP Asset Inventory). The Microsoft 365 admin centers and equivalent for other identity providers. The procurement records for SaaS subscriptions. The Cloud App Discovery feature in Microsoft Defender for Cloud Apps or equivalent CASB capability.
+The cloud platform's resource inventory APIs (Azure Resource Graph, AWS Resource Explorer or AWS Config, GCP Cloud Asset Inventory). The productivity platform's admin centers and the identity provider's application list. The procurement records for SaaS subscriptions. Shadow IT discovery from a CASB or the endpoint platform, where available.
 
 The inventory is consolidated into a single view that the IT or Information Security function can query. Smaller environments use a CSV-based approach combined with the platform-native inventory tools. Larger environments may invest in a Cyber Asset Attack Surface Management (CAASM) tool to consolidate the views automatically.
 
@@ -88,11 +88,11 @@ When new assets enter [ORGANIZATION_NAME]:
 
 **Hardware** is provisioned through the IT or IT service provider process. Devices are enrolled in the device management system before being given to users. Pre-enrollment delivery (the IT team handing a user a laptop and asking them to enroll it later) is not the standard path because users forget and devices remain unmanaged.
 
-**Software** is requested through the approved process described in POL-AUP-001 (Acceptable Use Policy) Section 3.8. Approved software is added to the software inventory at the time of approval.
+**Software** is requested through the approved process described in POL-AUP-001 (Acceptable Use Policy) Section 3.8. Approved software is added to the software inventory at the time of approval. Software that is no longer supported by its vendor is flagged in the inventory and either replaced or documented as an exception, since it no longer receives security updates.
 
 **Cloud and SaaS subscriptions** go through procurement with security review. The security review confirms federation support, data handling practices, and integration patterns. New SaaS subscriptions are added to the inventory at the time of procurement, with the named business owner recorded.
 
-**Identities** follow the provisioning process described in POL-IAM-001 and POL-IAM-011 for human and non-human identities respectively.
+**Identities** follow the provisioning process described in POL-IAM-001 and POL-IAM-003 for human and non-human identities respectively.
 
 Assets that arrive outside the standard process (a department signs up for a SaaS tool, a contractor brings in their own equipment, a developer provisions cloud resources without going through procurement) are still in scope. When discovered, they are either brought into the standard process or removed.
 
@@ -102,7 +102,7 @@ When an asset reaches the end of its useful life, it is removed from service thr
 
 For hardware:
 
-Devices are wiped before disposal, recycling, or transfer. The wipe meets the standard appropriate to the data the device may have stored. Confidential and restricted data classifications require a cryptographic wipe or physical destruction of storage media. Devices that are returned to a vendor (lease return, warranty replacement) are wiped before return. Devices that are reassigned to another user are wiped and reimaged. Decommissioned devices are removed from the inventory, the device management system, and any other systems where they appear.
+Devices are wiped before disposal, recycling, or transfer. The wipe meets the standard appropriate to the data the device may have stored, following the media sanitization guidance in NIST SP 800-88. Confidential and restricted data classifications require a cryptographic wipe or physical destruction of storage media. Devices that are returned to a vendor (lease return, warranty replacement) are wiped before return. Devices that are reassigned to another user are wiped and reimaged. Decommissioned devices are removed from the inventory, the device management system, and any other systems where they appear.
 
 For software:
 
@@ -114,7 +114,7 @@ Subscriptions are canceled through proper channels, not just abandoned. Data is 
 
 For identities:
 
-Removal follows POL-IAM-001 Section 3.4 (for human identities) and POL-IAM-011 Section 3.7 (for non-human identities).
+Removal follows POL-IAM-001 Section 3.4 (for human identities) and POL-IAM-003 Section 3.7 (for non-human identities).
 
 ### 3.6 Cloud Subscriptions and SaaS Receive Special Attention
 
@@ -126,7 +126,9 @@ The IT or Information Security function maintains a list of approved SaaS applic
 
 Each cloud subscription (Azure, AWS, GCP, others) has a named owner, a documented purpose, and a billing relationship that is tracked. Cloud subscriptions provisioned for short-term projects are decommissioned when the project ends.
 
-SaaS subscriptions used for business-critical work are integrated with the identity provider per POL-IAM-006 (Single Sign-On and Federation Standard) where the platform supports it. SaaS subscriptions that cannot be federated are reviewed for replacement on a defined timeline.
+SaaS subscriptions used for business-critical work are integrated with the identity provider per STD-IAM-002 (Single Sign-On and Federation Standard) where the platform supports it. SaaS subscriptions that cannot be federated are reviewed for replacement on a defined timeline.
+
+STD-AM-001 (SaaS Asset Management Standard) sets the specific requirements for the SaaS inventory, discovery, onboarding, administrator access, configuration, and retirement.
 
 The annual subscription review (often performed alongside budget planning) is the natural moment for the SaaS inventory to be refreshed. Renewals that no longer serve a clear purpose are not renewed.
 
@@ -166,7 +168,7 @@ The documentation is stored in a location accessible to the IT and Information S
 
 ### 3.10 Exceptions
 
-Some assets cannot be brought fully under this policy. Recognizing this is honest, not weak. The exception process documents what is excepted, why, and what compensating controls are in place.
+Some assets cannot be brought fully under this policy, and the exception process says so openly. It documents what is excepted, why, and what compensating controls are in place.
 
 Common situations requiring exceptions:
 
@@ -207,13 +209,15 @@ Lost or stolen devices: reported and remote-wiped immediately upon discovery.
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-006: Single Sign-On and Federation Standard
-POL-IAM-011: Non-Human Identity Governance Policy
+STD-IAM-002: Single Sign-On and Federation Standard
+POL-IAM-003: Non-Human Identity Governance Policy
 POL-AUP-001: Acceptable Use Policy
-POL-DC-001: Data Classification and Handling Policy (forthcoming)
-POL-VM-001: Vulnerability Management Policy (forthcoming, depends on the asset inventory)
-POL-IR-001: Incident Response Policy (forthcoming)
-POL-EP-001: Endpoint Protection Policy (forthcoming)
+POL-DC-001: Data Classification and Handling Policy
+POL-VM-001: Vulnerability Management Policy (depends on the asset inventory)
+POL-IR-001: Incident Response Policy
+POL-EP-001: Endpoint Protection Policy
+POL-TPRM-001: Third-Party Risk Management Policy (vendor relationships behind SaaS and cloud assets)
+STD-AM-001: SaaS Asset Management Standard (SaaS inventory, baseline, and retirement)
 
 ## 7. Framework Alignment
 
@@ -221,15 +225,15 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-ID.AM-01 (Inventories of hardware managed by the organization are maintained). ID.AM-02 (Inventories of software, services, and systems managed by the organization are maintained). ID.AM-04 (Inventories of services provided by suppliers are maintained). ID.AM-05 (Resources are prioritized based on classification, criticality, resources, and impact on the mission). ID.AM-08 (Systems, hardware, software, services, and data are managed throughout their life cycles).
+ID.AM-01 (Inventories of hardware managed by the organization are maintained). ID.AM-02 (Inventories of software, services, and systems managed by the organization are maintained). ID.AM-04 (Inventories of services provided by suppliers are maintained). ID.AM-05 (Assets are prioritized based on classification, criticality, resources, and impact on the mission). ID.AM-08 (Systems, hardware, software, services, and data are managed throughout their life cycles).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
 Control 1 Inventory and Control of Enterprise Assets: Safeguards 1.1 (establish and maintain a detailed enterprise asset inventory), 1.2 (address unauthorized assets), 1.3 (utilize an active discovery tool), 1.4 (use DHCP logging to update enterprise asset inventory), 1.5 (use a passive asset discovery tool).
 
-Control 2 Inventory and Control of Software Assets: Safeguards 2.1 (establish and maintain a software inventory), 2.2 (ensure authorized software is currently supported), 2.3 (address unauthorized software), 2.4 (utilize automated software inventory tools), 2.5 (allowlist authorized software), 2.6 (allowlist authorized libraries), 2.7 (allowlist authorized scripts).
+Control 2 Inventory and Control of Software Assets: Safeguards 2.1 (establish and maintain a software inventory), 2.2 (ensure authorized software is currently supported), 2.3 (address unauthorized software), 2.4 (utilize automated software inventory tools). Allowlisting (2.5 through 2.7) is addressed through application control in POL-EP-001 Section 3.5.
 
-Control 15 Service Provider Management: Selected safeguards related to inventorying third-party services.
+Control 15 Service Provider Management: Safeguard 15.1 (establish and maintain an inventory of service providers), through the SaaS and cloud inventory in Section 3.6.
 
 ## 8. Revision History
 
@@ -239,4 +243,6 @@ Control 15 Service Provider Management: Selected safeguards related to inventory
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

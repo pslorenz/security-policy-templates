@@ -1,0 +1,121 @@
+# Sample client config: a remote-first professional services firm of about twenty people,
+# running entirely on SaaS with an outside IT provider. Generate it with:
+#
+#     python3 scripts/generate.py examples/clients/sample-remote-firm.toml
+#
+# Every key under [values] must be a registered placeholder in placeholders.toml with
+# phase = "adoption". Use-time placeholders (template fill-in fields) are never set here.
+
+[generation]
+# When true, any adoption-time placeholder without a value is filled with the library's
+# example text and listed in GENERATION_REPORT.md for review. Leave false for real clients
+# until every value has been decided.
+use_examples = false
+# The closing attribution line is removed from every document by default, and a NOTICE
+# file credits the source once. Set true to keep the line, for example when building a
+# collection to redistribute.
+keep_attribution = false
+
+[scope]
+# The five questions from docs/adoption-guide.md.
+office_network = false
+self_hosted_internet_services = false
+writes_code = "scripts"            # none | scripts | internal | internet-facing
+regulated_data = []                # any of: cui, health, payment-card, nydfs
+it_provider = true
+
+[documents]
+# Status for any document that is not simply "Adopted". Addenda default to "Not adopted",
+# and POL-DEV-001 defaults from scope.writes_code.
+"STD-DC-001" = "Planned"
+"TPL-LOG-002" = "Not adopted"
+
+[values]
+ORGANIZATION_NAME = "Harbor & Pine Advisory LLC"
+EFFECTIVE_DATE = 2027-01-15
+POLICY_OWNER = "Dana Whitfield, Operations Director"
+EXECUTIVE_SPONSOR = "Marcus Oyelaran, Managing Partner"
+
+# Governance
+INFORMATION_SECURITY_FUNCTION = "the Operations Director, supported by the designated security service provider"
+ORGANIZATION_GOVERNANCE_BODY = "the partners"
+APPLICABLE_OBLIGATIONS = ["state breach notification laws", "client confidentiality terms", "cyber insurance policy requirements"]
+RISK_APPETITE_STATEMENT = """
+Harbor & Pine accepts moderate risk to the speed of internal operations, and low risk to
+the confidentiality of client information. Residual risks rated Critical are not accepted.
+"""
+AUP_VERSION = "1.0"
+GOV_VERSION = "1.0"
+ANNUAL_ACKNOWLEDGMENT_MONTH = "January"
+TESTING_TIER = "Baseline"
+
+# People and processes
+REPORTING_CHANNEL = "security@harborpine.example or the IT provider's help desk"
+REPORT_PHISHING_PROCESS = "the report button in the mail client"
+AI_TOOL_REQUEST_CHANNEL = "a request to the Operations Director"
+SCREENING_PROCESS = "the HR provider's onboarding checklist"
+VISITOR_LOG_RETENTION = "one year"
+CONTRACT_REVIEW_PROCESS = "review by outside counsel for contracts involving client data"
+PAYMENT_HANDLING_PROCESS = "the accounts receivable procedure"
+PAYMENT_APPROVAL_THRESHOLD = "$10,000"
+PAYMENT_INCIDENT_THRESHOLD = "$10,000"
+MEETING_RECORD_RETENTION = "ninety days"
+CHANGE_WINDOW = "weekday evenings after 6 p.m."
+CHANGE_RECORD_SYSTEM = "the IT provider's ticket system"
+CHANGE_RECORD_RETENTION = "two years"
+CONTINUITY_LEAD = "Marcus Oyelaran, Managing Partner"
+CONTINUITY_DEPUTY = "Dana Whitfield, Operations Director"
+CONTINUITY_ESCALATION_TIME = "two hours"
+
+# Approved tools (categories, not products, in the library; real names here are the client's choice)
+APPROVED_IDP = "the identity service of the firm's productivity platform"
+APPROVED_STORAGE_PLATFORMS = "the productivity platform's file storage and collaboration services"
+APPROVED_AI_TOOLS = "the AI assistant included in the productivity platform's business plan"
+APPROVED_BROWSERS = "two current mainstream browsers managed through device management"
+APPROVED_EDR_PLATFORMS = "the managed EDR service provided by the IT provider"
+APPROVED_MDM_PLATFORMS = "the productivity platform's device management service"
+APPROVED_PASSWORD_MANAGERS = "the business password manager licensed by the firm"
+APPROVED_REMOTE_ACCESS_TOOLS = "an identity-gated access service selected with the IT provider, should the firm add internal systems"
+APPROVED_SECRETS_PLATFORMS = "the secrets feature of the approved password manager"
+APPROVED_DNS_FILTERING = "the protective DNS client deployed by the IT provider"
+APPROVED_FIREWALL_VENDORS = "business-class firewalls selected with the IT provider, should the firm open an office"
+APPROVED_VM_TOOLS = "the EDR platform's vulnerability assessment and the IT provider's external scanner"
+APPROVED_VENDOR_MONITORING = "news monitoring and direct vendor notifications"
+
+# Monitoring and logging
+CENTRAL_LOGGING_PLATFORM = "the managed SIEM service provided by the IT provider"
+MONITORING_PROVIDER = "the IT provider's security operations team"
+MONITORING_COVERAGE = "business-hours coverage with automated containment outside business hours"
+LOG_TIME_ZONE = "UTC"
+TIME_SOURCE = "the time service built into the productivity platform and managed devices"
+VALIDATION_PERIOD = "seven days"
+ARCHIVE_RESTORE_TIME = "two business days"
+
+# Incident response and recovery
+INCIDENT_RESPONSE_RETAINER_FIRM = "the incident response firm on the cyber insurance carrier's panel"
+CYBER_INSURANCE_DOCUMENTATION = "the shared Operations folder and the offline incident binder"
+SECURITY_LEGAL_COUNSEL = "the firm's outside counsel"
+CRITICAL_RPO = "24 hours"
+CRITICAL_RTO = "48 hours"
+IMPORTANT_RPO = "24 hours"
+IMPORTANT_RTO = "5 days"
+STANDARD_RPO = "7 days"
+DAILY_RETENTION = "30 days"
+WEEKLY_RETENTION = "12 weeks"
+MONTHLY_RETENTION = "12 months"
+
+# Email and vulnerability disclosure
+DMARC_ENFORCEMENT_TIMELINE = "about four months"
+VULNERABILITY_DISCLOSURE_CHANNEL = "security@harborpine.example"
+
+# Client-facing explainers
+ESTIMATED_PROGRAM_COST = "$6,000 to $9,000 in the first year"
+TIMELINE_WEEKS = "six"
+
+[export]
+# Options for scripts/export.py. All optional; these are the defaults except prepared_by.
+font = "Arial"
+primary_color = "1F4E79"           # header rows and headings, as a hex color
+prepared_by = "Example Security Partners"
+logo = ""                          # path to a PNG or JPG for the page header; empty for none
+include_not_adopted = false

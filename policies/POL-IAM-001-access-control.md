@@ -22,7 +22,7 @@ The goal is simple. Every person and every system should have only the access th
 
 This policy covers all accounts that access [ORGANIZATION_NAME] systems and data. That includes:
 
-Employees, contractors, and temporary workers. Vendors and service providers with access to our environment. Service accounts and other non-human accounts (covered in detail by POL-IAM-011). Customer accounts that access systems we operate.
+Employees, contractors, and temporary workers. Vendors and service providers with access to our environment. Service accounts and other non-human accounts (covered in detail by POL-IAM-003). Customer accounts that access systems we operate.
 
 It applies to all systems we use. That includes Microsoft 365 or Google Workspace, cloud platforms like Azure or AWS, line-of-business applications, file storage, and any other system that holds company data or supports company operations.
 
@@ -33,6 +33,8 @@ It applies to all systems we use. That includes Microsoft 365 or Google Workspac
 Every account in our environment must be tied to a specific person. For employee accounts, that person is the employee. For service accounts and integrations, that person is whoever is responsible for the system or process that uses the account.
 
 Shared accounts are not allowed. If two people need to access the same system, they each get their own account. The only exception is a documented break-glass account used for emergency access, which is covered in Section 3.7.
+
+The IT function maintains an inventory of all accounts, including each account's owner, start date, end date where known, and department. The inventory is validated during the quarterly review in Section 3.3.
 
 ### 3.2 Access Is Granted Based on Job Need
 
@@ -48,7 +50,9 @@ Every quarter, managers review who reports to them and confirm that each person 
 
 For systems that hold sensitive data or support critical operations, the system owner also reviews access quarterly. They confirm that the people listed should still have access and that the access level is still appropriate.
 
-The review is documented. Anyone who appears in the review and has changed roles, left the company, or no longer needs the access has their access removed within thirty days.
+The review is documented. Anyone who appears in the review and has changed roles, left the company, or no longer needs the access has their access removed within thirty days. The review is conducted and recorded with TPL-IAM-002.
+
+User accounts with no sign-in activity for forty-five days are disabled automatically where the platform supports it, and re-enabled only after the account owner's manager confirms the need. Non-human identities follow the dormancy thresholds in POL-IAM-003 Section 3.7.
 
 ### 3.4 Access Is Removed Promptly When People Leave
 
@@ -78,7 +82,7 @@ Privileged access is reviewed monthly rather than quarterly.
 
 Every account that accesses [ORGANIZATION_NAME] systems uses multi-factor authentication. There are no exceptions for executives, no exceptions for legacy systems, and no exceptions for "just for now."
 
-For standard user accounts, push-notification or authenticator-app MFA is acceptable. For privileged accounts, phishing-resistant authentication is required as described in Section 3.5.
+For standard user accounts, an authenticator app with number matching or a stronger method from STD-IAM-001 Section 3.4 is required. For privileged accounts, phishing-resistant authentication is required as described in Section 3.5.
 
 Where a system does not support MFA, we put it behind a system that does (such as a single sign-on portal, an identity provider, or a jump host). If that is not possible, we replace the system within a documented timeline or accept a documented risk.
 
@@ -89,6 +93,8 @@ We maintain a small number of emergency-use accounts that allow access if normal
 Break-glass accounts follow these rules:
 
 They are used only for emergencies. Routine administration uses normal accounts. The credentials are stored in a secure way that requires multiple people to retrieve them (split between trusted custodians, stored in a sealed envelope in a safe, or held in a privileged access management tool that logs retrieval).
+
+Where the platform requires multi-factor authentication for administrative access, break-glass accounts use a phishing-resistant method (such as a FIDO2 security key stored with the credentials) rather than a password alone, so that the emergency path still works when it is needed.
 
 Their use is logged and reviewed. If a break-glass account is used, the use triggers an alert to the security team, and the use is reviewed within twenty-four hours. The credentials are rotated after each use.
 
@@ -124,7 +130,7 @@ No exception lasts more than twelve months without renewal. All active exception
 
 **[ORGANIZATION_NAME] leadership.** Approves the policy. Sets the executive sponsor. Funds the work needed to implement and maintain the policy.
 
-**Information Security function (which may be an internal team, an MSP, or a vCISO).** Owns the policy. Maintains the access patterns. Reviews privileged access monthly. Investigates anomalies. Approves exceptions.
+**Information Security function (which may be an internal team, an MSP, or a vCISO).** Owns the policy. Maintains the access patterns. Reviews privileged access monthly. Investigates anomalies. Reviews exception requests and tracks approved exceptions.
 
 **IT function (or IT service provider).** Implements access controls in the systems we use. Provisions and deprovisions accounts. Maintains the logging. Supports the access review process.
 
@@ -144,10 +150,14 @@ Account ownership not assigned: documented and assigned within thirty days, or t
 
 ## 6. Related Documents
 
-POL-IAM-002: Password and Authentication Standard (specific technical requirements for credentials)
-POL-IAM-011: Non-Human Identity Governance Policy (service accounts and automation identities)
+STD-IAM-001: Password and Authentication Standard (specific technical requirements for credentials)
+POL-IAM-002: Remote Access Policy (remote access provisions)
+STD-IAM-002: Single Sign-On and Federation Standard (application authentication integration)
+POL-IAM-003: Non-Human Identity Governance Policy (service accounts and automation identities)
 POL-AUP-001: Acceptable Use Policy (how users are expected to behave)
 POL-IR-001: Incident Response Policy (what we do when something goes wrong)
+TPL-IAM-002: Quarterly User Access Review (the review in Section 3.3 and the monthly privileged review in Section 3.5)
+POL-PPS-001: Physical and Personnel Security Policy (screening, agreements, and departures)
 
 ## 7. Framework Alignment
 
@@ -155,11 +165,11 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-PR.AA-01 (Identities and credentials are managed). PR.AA-02 (Identities are proofed and bound to credentials). PR.AA-03 (Users, services, and hardware are authenticated). PR.AA-04 (Identity assertions are protected). PR.AA-05 (Access permissions, entitlements, and authorizations are defined and managed).
+PR.AA-01 (Identities and credentials for authorized users, services, and hardware are managed by the organization). PR.AA-03 (Users, services, and hardware are authenticated). PR.AA-05 (Access permissions, entitlements, and authorizations are defined and managed).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
-Control 5 Account Management: Safeguards 5.1 (inventory of accounts), 5.2 (use unique passwords), 5.3 (disable dormant accounts), 5.4 (restrict administrator privileges), 5.6 (centralize account management).
+Control 5 Account Management: Safeguards 5.1 (establish and maintain an inventory of accounts), 5.2 (use unique passwords), 5.3 (disable dormant accounts), 5.4 (restrict administrator privileges), 5.6 (centralize account management).
 
 Control 6 Access Control Management: Safeguards 6.1 (access granting process), 6.2 (access revoking process), 6.3 (require MFA for externally-exposed applications), 6.4 (require MFA for remote network access), 6.5 (require MFA for administrative access), 6.7 (centralize access control), 6.8 (role-based access control).
 
@@ -171,4 +181,6 @@ Control 6 Access Control Management: Safeguards 6.1 (access granting process), 6
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

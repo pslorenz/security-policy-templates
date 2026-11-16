@@ -16,7 +16,7 @@
 
 This policy defines how [ORGANIZATION_NAME] responds to security incidents. It covers what counts as an incident, who declares one, how the response is run, and what happens afterward.
 
-The goal is not to prevent every possible bad outcome from a security incident. That is not achievable. The goal is to make sure that when something goes wrong, [ORGANIZATION_NAME] responds in a way that limits the damage, restores normal operations, and produces lessons that strengthen the program.
+The goal is to make sure that when something goes wrong, [ORGANIZATION_NAME] responds in a way that limits the damage, restores normal operations, and produces lessons that strengthen the program. Preventing every bad outcome is not achievable, and the policy does not pretend otherwise.
 
 Good incident response depends on two things. The first is preparation: the people, tools, processes, and decisions that exist before anything happens. The second is muscle memory: the team has rehearsed the response often enough that they do not have to invent it under pressure. This policy supports both.
 
@@ -84,7 +84,7 @@ For clearly serious situations (active ransomware, confirmed compromise with act
 
 **Eradication.** Removing the cause of the incident from the environment. Eradication may include removing malware, closing the vulnerability that was exploited, removing attacker access, and rotating compromised credentials. Eradication is complete when the incident's root cause has been addressed and there is reasonable confidence that the adversary or threat is no longer present.
 
-**Recovery.** Returning systems and operations to normal, validated state. Recovery includes restoring services from clean backups where appropriate, monitoring for signs that the threat returns, and verifying that affected systems are functioning correctly. Recovery is complete when [ORGANIZATION_NAME] has confidence that operations are stable and the affected environment is no more vulnerable than before the incident.
+**Recovery.** Returning systems and operations to normal, validated state. Recovery includes restoring services from clean backups where appropriate, following STD-DR-001 Section 3.9, monitoring for signs that the threat returns, and verifying that affected systems are functioning correctly. Recovery is complete when [ORGANIZATION_NAME] has confidence that operations are stable and the affected environment is no more vulnerable than before the incident.
 
 **Post-Incident Review.** Examining what happened, what worked well, and what should change. The review produces specific recommendations for improving the security program based on what the incident revealed. This phase is not optional. Incidents that produce no learning produce no improvement.
 
@@ -106,6 +106,8 @@ Communication during incidents is structured to keep the right people informed w
 
 **Internal communication** during the response uses dedicated channels: a defined incident channel in the company's chat platform, a defined incident email distribution list, and a defined conference bridge for verbal coordination. These channels are established as part of preparation; they do not get created during the incident.
 
+An out-of-band channel that does not depend on [ORGANIZATION_NAME]'s identity provider, email, or chat platform is also established in advance. When the incident involves the identity provider, email, or administrative accounts, the response moves to the out-of-band channel, because an attacker with access to the tenant can read the primary channels.
+
 The Information Security function maintains the running record of the incident: timeline, decisions made, actions taken, and outcomes observed. This record becomes the basis for the post-incident review and any required external reporting.
 
 **Executive communication** for High and Critical incidents goes to the executive sponsor at declared intervals (typically every two hours during active response for Critical, daily for High). Communications include a current status, the actions taken since the last update, the actions planned, and any decisions the executive needs to make.
@@ -116,13 +118,15 @@ Specific external notifications may be required by:
 
 Regulatory requirements applicable to the data involved (privacy regulations, sector-specific rules). Contractual obligations to clients, vendors, or partners. Cyber insurance policy requirements. Law enforcement or government reporting requirements.
 
+**Pending federal requirement: CIRCIA.** The Cyber Incident Reporting for Critical Infrastructure Act of 2022 will require covered entities in critical infrastructure sectors to report covered cyber incidents to CISA within seventy-two hours and ransom payments within twenty-four hours. The requirements take effect on a date set by CISA's final rule, which had not been published when this policy was written. Which entities are covered, what counts as a covered incident, and how reports are made may change in the final rule. [ORGANIZATION_NAME] confirms with counsel whether it is a covered entity and what the final rule requires once it is published, and this paragraph is validated at every policy review until then.
+
 The applicable obligations are assessed during the response with appropriate counsel. Notifications are made within the timelines required, which vary substantially by jurisdiction and data type.
 
 ### 3.7 External Support and Retainers
 
 [ORGANIZATION_NAME] maintains relationships with external parties who can support incident response when internal capacity is insufficient or specialized expertise is needed.
 
-**Incident response retainer.** A relationship with a qualified incident response firm, established before incidents occur. The retainer specifies the engagement model, response time commitment, and the conditions under which the firm is engaged. The current retainer is with [INCIDENT_RESPONSE_RETAINER_FIRM, e.g., Mandiant, Unit 42, CrowdStrike, Kroll, or local equivalent].
+**Incident response retainer.** A relationship with a qualified incident response firm, established before incidents occur. The retainer specifies the engagement model, response time commitment, and the conditions under which the firm is engaged. The current retainer is with [INCIDENT_RESPONSE_RETAINER_FIRM, e.g., an incident response firm on the cyber insurance carrier's approved panel, or a regional firm the carrier has pre-approved]. Many cyber insurance policies cover response costs only when the carrier is notified first and a panel firm is used, so the retainer and the insurance policy are checked against each other before an incident.
 
 **Legal counsel.** Counsel familiar with breach notification, regulatory obligations, and cybersecurity matters. The current legal counsel for security matters is [SECURITY_LEGAL_COUNSEL]. Some incidents are conducted under attorney-client privilege; the conditions for invoking privilege are decided in consultation with counsel at the start of the response.
 
@@ -142,7 +146,7 @@ Logs from affected systems, identity providers, network equipment, and endpoint 
 
 For incidents likely to involve litigation or regulatory action, a chain of custody is maintained for evidence. Evidence is handled by named custodians with documented transfers. The handling specifics are determined in consultation with legal counsel.
 
-Evidence is retained per the [LOGGING_AND_MONITORING_STANDARD] retention rules at minimum. Incidents under active legal or regulatory process may require longer retention; the period is determined with counsel.
+Evidence is retained per the STD-LOG-001 retention rules at minimum. Incidents under active legal or regulatory process may require longer retention; the period is determined with counsel.
 
 ### 3.9 Post-Incident Review
 
@@ -156,19 +160,19 @@ The review is conducted by the Information Security function with input from eve
 
 For Critical incidents, the post-incident review is conducted within thirty days of closure. For High incidents, within sixty days. For Medium incidents, within ninety days. Reviews not conducted within these timelines are escalated.
 
-The review is not a venue for assigning blame to individual response team members. It is a venue for understanding the system that produced the incident and improving that system. Honest discussion of mistakes is essential to that purpose.
+The review examines the system that produced the incident and improves that system. Assigning blame to individual response team members works against that purpose, because honest discussion of mistakes is what makes the review useful.
 
 ### 3.10 Tabletop Exercises and Preparation Activities
 
 [ORGANIZATION_NAME] runs tabletop exercises at least quarterly. The exercises test the incident response process against realistic scenarios appropriate to the organization's environment and threat exposure.
 
-Quarterly exercises cycle through the most plausible incident types: account compromise, ransomware, business email compromise, lost device with sensitive data, supply chain or vendor incident, insider threat, and similar scenarios. The companion runbook (RUN-IR-001) describes the specific exercise scenarios and the facilitation guide.
+Quarterly exercises cycle through the most plausible incident types: account compromise, ransomware, business email compromise, lost device with sensitive data, supply chain or vendor incident, insider threat, and similar scenarios. The playbooks in RUN-IR-001 Section 3.2 are the baseline the exercises test against. RUN-IR-002 provides the scenarios, the facilitation procedure, and the exercise record.
 
 Exercises involve the response team plus, on a rotating basis, the executive sponsor and other leadership. Annual exercises include the executive sponsor by default to maintain leadership engagement with the response process.
 
 Exercise outcomes are documented with the same rigor as actual incidents. Gaps identified during exercises are remediated through the same process that handles post-incident review findings.
 
-Other preparation activities include maintaining the incident response materials (contact lists, runbook content, authority matrix, evidence handling procedures), validating that backup and recovery processes work, and confirming that the relationships with external partners are current.
+Other preparation activities include maintaining the incident response materials (contact lists, runbook content, authority matrix, evidence handling procedures, exercise scenarios and facilitation guides), validating that backup and recovery processes work, and confirming that the relationships with external partners are current.
 
 ### 3.11 Exceptions
 
@@ -213,16 +217,21 @@ The enforcement framing reflects that effective incident response depends on pro
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-002: Password and Authentication Standard
-POL-IAM-005: Remote Access Policy
-POL-IAM-011: Non-Human Identity Governance Policy
+STD-IAM-001: Password and Authentication Standard
+POL-IAM-002: Remote Access Policy
+POL-IAM-003: Non-Human Identity Governance Policy
 POL-AUP-001: Acceptable Use Policy
 POL-AM-001: Asset Management Policy
 POL-DC-001: Data Classification and Handling Policy
 RUN-IR-001: Incident Response Runbook (the operational companion to this policy)
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming, evidence retention)
-POL-EP-001: Endpoint Protection Policy (forthcoming)
-POL-AUP-001: Vulnerability Management Policy (forthcoming)
+RUN-IR-002: Tabletop Exercise Facilitation Runbook (the quarterly exercises in Section 3.10)
+STD-DR-001: Data Backup and Recovery Standard (recovery from backups)
+POL-BC-001: Business Continuity Policy (keeping the business running during an incident)
+STD-LOG-001: Logging and Monitoring Standard (evidence retention)
+POL-EP-001: Endpoint Protection Policy
+POL-VM-001: Vulnerability Management Policy
+POL-NET-001: Network Security Policy
+POL-TPRM-001: Third-Party Risk Management Policy (vendor incident coordination)
 
 ## 7. Framework Alignment
 
@@ -230,9 +239,9 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-GV.RR-04 (Cybersecurity is included in human resources practices). DE.AE-02 (Potentially adverse events are analyzed to better understand associated activities). DE.AE-03 (Information is correlated from multiple sources). DE.AE-06 (Information on adverse events is provided to authorized staff and tools). DE.AE-08 (Incidents are declared when adverse events meet the defined incident criteria). RS.MA-01 (The incident response plan is executed in coordination with relevant third parties once an incident is declared). RS.MA-02 (Incident reports are triaged and validated). RS.MA-03 (Incidents are categorized and prioritized). RS.MA-04 (Incidents are escalated or elevated as needed). RS.MA-05 (The criteria for initiating incident recovery are applied). RS.AN (Incident analysis). RS.CO (Incident response reporting and communication). RS.MI (Incident mitigation). RC.RP (Incident recovery plan execution). RC.CO (Incident recovery communication).
+GV.RR-04 (Cybersecurity is included in human resources practices). DE.AE-02 (Potentially adverse events are analyzed to better understand associated activities). DE.AE-03 (Information is correlated from multiple sources). DE.AE-06 (Information on adverse events is provided to authorized staff and tools). DE.AE-08 (Incidents are declared when adverse events meet the defined incident criteria). RS.MA-01 (The incident response plan is executed in coordination with relevant third parties once an incident is declared). RS.MA-02 (Incident reports are triaged and validated). RS.MA-03 (Incidents are categorized and prioritized). RS.MA-04 (Incidents are escalated or elevated as needed). RS.MA-05 (The criteria for initiating incident recovery are applied). RS.AN-03 (Analysis is performed to establish what has taken place during an incident and the root cause of the incident). RS.AN-06 (Actions performed during an investigation are recorded, and the records' integrity and provenance are preserved). RS.AN-07 (Incident data and metadata are collected, and their integrity and provenance are preserved). RS.AN-08 (An incident's magnitude is estimated and validated). RS.CO-02 (Internal and external stakeholders are notified of incidents). RS.CO-03 (Information is shared with designated internal and external stakeholders). RS.MI-01 (Incidents are contained). RS.MI-02 (Incidents are eradicated). RC.RP-01 (The recovery portion of the incident response plan is executed once initiated from the incident response process). RC.RP-02 (Recovery actions are selected, scoped, prioritized, and performed). RC.RP-03 (The integrity of backups and other restoration assets is verified before using them for restoration). RC.RP-05 (The integrity of restored assets is verified, systems and services are restored, and normal operating status is confirmed). RC.CO-03 (Recovery activities and progress in restoring operational capabilities are communicated to designated internal and external stakeholders). RC.CO-04 (Public updates on incident recovery are shared using approved methods and messaging).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
 Control 17 Incident Response Management: Safeguards 17.1 (designate personnel to manage incident handling), 17.2 (establish and maintain contact information for reporting security incidents), 17.3 (establish and maintain an enterprise process for reporting incidents), 17.4 (establish and maintain an incident response process), 17.5 (assign key roles and responsibilities), 17.6 (define mechanisms for communicating during incident response), 17.7 (conduct routine incident response exercises), 17.8 (conduct post-incident reviews), 17.9 (establish and maintain security incident thresholds).
 
@@ -244,4 +253,6 @@ Control 17 Incident Response Management: Safeguards 17.1 (designate personnel to
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

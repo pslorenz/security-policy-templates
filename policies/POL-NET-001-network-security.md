@@ -16,11 +16,11 @@
 
 This policy defines how [ORGANIZATION_NAME] secures its networks. It covers the office networks where employees work, the cloud networks where company resources are hosted, the wireless networks employees and guests use, and the connections between them.
 
-The reason network security matters in 2026 is different from the reason it mattered ten years ago. The old model assumed a strong network perimeter with trusted internal networks behind it. That model has not held up. Modern SMB environments have employees working from home, cloud-hosted resources, SaaS applications outside any network the organization controls, and identity-based access patterns that do not depend on network location. The network perimeter is no longer the primary line of defense.
+The reason network security matters today is different from the reason it mattered ten years ago. The old model assumed a strong network perimeter with trusted internal networks behind it. That model has not held up. Modern SMB environments have employees working from home, cloud-hosted resources, SaaS applications outside any network the organization controls, and identity-based access patterns that do not depend on network location. The network perimeter is no longer the primary line of defense.
 
 What network security still does in this world: it segments the environment so that a compromise in one place does not become a compromise everywhere. It controls the egress paths that ransomware and data exfiltration depend on. It provides visibility into what is talking to what. It protects the office and cloud networks where physical or platform-level access matters. These are real defensive controls, even though they are no longer the primary perimeter.
 
-This policy works alongside POL-IAM-005 (Remote Access Policy), which addresses how users connect to company resources from outside, and POL-AM-001 (Asset Management Policy), which tracks the network equipment itself.
+This policy works alongside POL-IAM-002 (Remote Access Policy), which addresses how users connect to company resources from outside, and POL-AM-001 (Asset Management Policy), which tracks the network equipment itself.
 
 ## 2. Scope
 
@@ -28,7 +28,7 @@ This policy applies to all networks operated by or used to access [ORGANIZATION_
 
 Office networks at company locations, including wired and wireless segments. Cloud platform virtual networks (Azure VNets, AWS VPCs, GCP VPC networks, equivalent). Network equipment owned or operated by [ORGANIZATION_NAME] (firewalls, switches, routers, wireless access points, load balancers). Connections between [ORGANIZATION_NAME]'s networks and external networks, including internet egress and any direct connections to vendors or partners. Guest network segments where present.
 
-It does not cover the remote access path from external networks to [ORGANIZATION_NAME] resources, which is addressed in POL-IAM-005. It does not cover endpoint-level network controls (host firewalls, EDR network telemetry), which are addressed in POL-EP-001.
+It does not cover the remote access path from external networks to [ORGANIZATION_NAME] resources, which is addressed in POL-IAM-002. It does not cover endpoint-level network controls (host firewalls, EDR network telemetry), which are addressed in POL-EP-001.
 
 ## 3. Policy Statements
 
@@ -46,6 +46,8 @@ For cloud platform networks, segmentation follows the platform's native construc
 
 For environments with sensitive workloads (production systems, systems holding Restricted data, financial systems), additional segmentation isolates those workloads from the general environment. The isolation includes both network controls and identity controls, consistent with POL-IAM-001 and POL-DC-001.
 
+The IT function maintains network architecture diagrams for office and cloud networks, showing segments, the permitted paths between them, and connections to external parties. The diagrams are reviewed annually and after significant changes.
+
 Flat networks where everything can reach everything are not acceptable. Existing flat networks are migrated to a segmented model on a documented timeline, typically twelve to eighteen months from policy adoption.
 
 ### 3.2 Edge Security
@@ -54,13 +56,13 @@ The connection between [ORGANIZATION_NAME] networks and the internet is protecte
 
 For office networks, this means:
 
-A firewall at the network edge, with deny-by-default ingress rules and explicit egress rules. The firewall is from a current, supported vendor and runs current firmware. Approved firewalls for [ORGANIZATION_NAME] are [APPROVED_FIREWALL_VENDORS, e.g., Fortinet, Sophos, SonicWall, Cisco, Ubiquiti for smaller environments]. Intrusion prevention or threat detection capabilities, where the firewall platform supports them, configured to inspect traffic for known threats. DNS filtering at the network level, blocking known-malicious domains and providing visibility into lookup patterns. Approved DNS filtering services include [APPROVED_DNS_FILTERING, e.g., Cisco Umbrella, Cloudflare Gateway, NextDNS, DNSFilter]. Geographic filtering where appropriate, blocking traffic from regions where [ORGANIZATION_NAME] does not operate or where threat patterns warrant restriction.
+A firewall at the network edge, with deny-by-default ingress rules and explicit egress rules. The firewall is from a current, supported vendor and runs current firmware. Approved firewalls for [ORGANIZATION_NAME] are [APPROVED_FIREWALL_VENDORS, e.g., a business-class firewall with intrusion prevention, centralized management, and a published firmware support lifecycle]. Intrusion prevention or threat detection capabilities, where the firewall platform supports them, configured to inspect traffic for known threats. DNS filtering at the network level, blocking known-malicious domains and providing visibility into lookup patterns. Approved DNS filtering services include [APPROVED_DNS_FILTERING, e.g., a protective DNS service that blocks known-malicious domains and logs queries per device]. Geographic filtering where appropriate, blocking traffic from regions where [ORGANIZATION_NAME] does not operate or where threat patterns warrant restriction.
 
 For cloud networks, edge security means:
 
 The cloud platform's native firewall and DDoS protection capabilities are enabled. Public-facing cloud resources are minimized; resources that do not need to be public are not exposed to the internet. Where public access is required, the access is gated through application-layer controls (web application firewalls, API gateways) rather than direct exposure of underlying infrastructure.
 
-The configurations are reviewed quarterly to confirm they remain appropriate.
+The configurations are reviewed quarterly to confirm they remain appropriate. STD-NET-001 extends DNS and web filtering to managed devices off the office network and sets the email protection requirements.
 
 ### 3.3 Egress Filtering
 
@@ -90,13 +92,13 @@ WPA3 authentication where supported, with WPA2 with strong configuration as a fa
 
 **Guest wireless** (the network visitors use) requires:
 
-Separation from the corporate network with no access to internal resources. Authentication appropriate to the visitor population: a captive portal with terms acceptance, a simple shared key, or sponsored access. Bandwidth limits to prevent guest use from affecting corporate operations.
+Separation from the corporate network with no access to internal resources. Encryption and authentication appropriate to the visitor population: a shared key, Wi-Fi Enhanced Open (OWE) where supported, or sponsored access, optionally combined with a captive portal for terms acceptance. A click-through captive portal on its own does not encrypt traffic. Bandwidth limits to prevent guest use from affecting corporate operations.
 
 **IoT wireless** (the network for cameras, smart equipment, conference room devices) requires:
 
 Separation from both corporate and guest networks. Restrictive firewall rules limiting what IoT devices can reach. Inventory tracking through POL-AM-001.
 
-Open wireless networks without authentication are not permitted on [ORGANIZATION_NAME] property, including guest networks. Even guest networks require some form of authentication or acceptance.
+Open wireless networks without encryption are not permitted on [ORGANIZATION_NAME] property, including guest networks.
 
 ### 3.5 Network Equipment Configuration
 
@@ -106,11 +108,11 @@ Specific requirements:
 
 Default vendor credentials are changed before equipment is placed in service. Default credentials are not used in production under any circumstance.
 
-Administrative access to network equipment requires authentication consistent with POL-IAM-002, including MFA for any access from networks other than the device's management network.
+Administrative access to network equipment requires authentication consistent with STD-IAM-001, including MFA for any access from networks other than the device's management network.
 
-Management interfaces are not exposed to the internet. Management is performed from internal management networks or through the approved remote access tools described in POL-IAM-005.
+Management interfaces are not exposed to the internet. Management is performed from internal management networks or through the approved remote access tools described in POL-IAM-002.
 
-Network equipment runs current firmware. Critical security updates are applied within thirty days, with faster timelines for actively-exploited vulnerabilities consistent with POL-VM-001.
+Network equipment runs current firmware. Security updates are applied on the priority cadences in POL-VM-001 Section 3.3. Edge devices (firewalls, VPN gateways, and anything else reachable from the internet) are treated as internet-facing under POL-VM-001 Section 3.5, because they are among the most frequently exploited assets.
 
 Configurations are backed up regularly. Backups are stored in a location accessible during incident response. Configuration changes are logged.
 
@@ -122,7 +124,7 @@ Network activity is logged to support detection and incident response. The loggi
 
 Firewall traffic logs, including blocked and permitted connections. DNS query logs, including queries to malicious or suspicious domains. Wireless authentication and association events. Network equipment authentication and configuration change events. Egress traffic patterns sufficient to identify anomalies.
 
-Logs are sent to the central logging platform within fifteen minutes of the event. Local logs on network equipment are retained for at least seven days as a backup. Centralized logs are retained per the [LOGGING_AND_MONITORING_STANDARD] (forthcoming).
+Logs are sent to the central logging platform within fifteen minutes of the event. Local logs on network equipment are retained for at least seven days as a backup. Centralized logs are retained per STD-LOG-001.
 
 Monitoring focuses on patterns that indicate compromise:
 
@@ -154,7 +156,7 @@ Resources are placed in the appropriate network segment based on their function 
 
 Network security groups, security groups, or firewall rules are configured with deny-by-default. Permitted traffic is explicit.
 
-Public IP addresses are assigned only to resources that genuinely need them. Public-facing resources sit behind appropriate edge controls (load balancers, application gateways, web application firewalls).
+Public IP addresses are assigned only to resources that need them. Public-facing resources sit behind appropriate edge controls (load balancers, application gateways, web application firewalls).
 
 Network flow logs are enabled and forwarded to the central logging platform.
 
@@ -208,7 +210,7 @@ Flat networks identified during review: migration plan documented within sixty d
 
 Default credentials on network equipment: changed within seven days of identification.
 
-Network equipment running outdated firmware: updated within thirty days for security updates, sooner for actively-exploited vulnerabilities per POL-VM-001.
+Network equipment running outdated firmware: updated on the POL-VM-001 cadence for the vulnerability's priority.
 
 Unauthorized devices on the network: investigated and either authorized through the standard process or removed within fourteen days.
 
@@ -217,13 +219,15 @@ Open wireless networks without authentication: secured within seven days of iden
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-005: Remote Access Policy (the user remote access path this policy does not cover)
+POL-IAM-002: Remote Access Policy (the user remote access path this policy does not cover)
 POL-AM-001: Asset Management Policy (network equipment inventory)
 POL-DC-001: Data Classification and Handling Policy (data sensitivity informs segmentation)
 POL-EP-001: Endpoint Protection Policy (host-level network controls)
 POL-VM-001: Vulnerability Management Policy (network equipment patching)
 POL-IR-001: Incident Response Policy (response to network compromise)
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming, log retention)
+STD-LOG-001: Logging and Monitoring Standard (log retention)
+STD-NET-001: Email and Web Browser Protection Standard (filtering off-network, email authentication, and browser controls)
+STD-OPS-001: Change Management Standard (firewall and network configuration changes)
 
 ## 7. Framework Alignment
 
@@ -231,13 +235,17 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-PR.IR-01 (Networks and environments are protected from unauthorized logical access). PR.IR-02 (The organization's technology assets are protected from environmental threats). PR.PS-01 (Configuration management practices are established and applied). DE.CM-01 (Networks and personnel activity are monitored to find potentially adverse events). DE.CM-06 (External service provider activities and services are monitored to find potentially adverse events).
+PR.IR-01 (Networks and environments are protected from unauthorized logical access and usage). PR.PS-01 (Configuration management practices are established and applied). DE.CM-01 (Networks and network services are monitored to find potentially adverse events). DE.CM-06 (External service provider activities and services are monitored to find potentially adverse events).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
-Control 12 Network Infrastructure Management: Safeguards 12.1 (ensure network infrastructure is up-to-date), 12.2 (establish and maintain a secure network architecture), 12.3 (securely manage network infrastructure), 12.4 (establish and maintain architecture diagram(s)), 12.5 (centralize network authentication, authorization, and auditing), 12.6 (use of secure network management and communication protocols), 12.7 (ensure remote devices utilize a VPN and are connecting to an enterprise's AAA infrastructure), 12.8 (establish and maintain dedicated computing resources for all administrative work).
+Control 4 Secure Configuration of Enterprise Assets and Software: Safeguard 4.2 (establish and maintain a secure configuration process for network infrastructure), through Section 3.5.
 
-Control 13 Network Monitoring and Defense: Safeguards 13.1 (centralize security event alerting), 13.2 (deploy a host-based intrusion detection solution), 13.3 (deploy a network intrusion detection solution), 13.4 (perform traffic filtering between network segments), 13.5 (manage access control for remote assets), 13.6 (collect network traffic flow logs).
+Control 9 Email and Web Browser Protections: Safeguards 9.2 (use DNS filtering services) and 9.3 (maintain and enforce network-based URL filters), through Sections 3.2 and 3.3.
+
+Control 12 Network Infrastructure Management: Safeguards 12.1 (ensure network infrastructure is up-to-date), 12.2 (establish and maintain a secure network architecture), 12.3 (securely manage network infrastructure), 12.4 (establish and maintain architecture diagram(s)), 12.5 (centralize network authentication, authorization, and auditing), 12.6 (use of secure network management and communication protocols). Remote access (12.7) is covered by POL-IAM-002.
+
+Control 13 Network Monitoring and Defense: Safeguards 13.1 (centralize security event alerting), 13.3 (deploy a network intrusion detection solution), 13.4 (perform traffic filtering between network segments), 13.6 (collect network traffic flow logs). Host-based detection (13.2) is covered by POL-EP-001, and remote asset access control (13.5) by POL-IAM-002.
 
 ## 8. Revision History
 
@@ -247,4 +255,6 @@ Control 13 Network Monitoring and Defense: Safeguards 13.1 (centralize security 
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*
