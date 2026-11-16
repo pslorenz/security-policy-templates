@@ -76,9 +76,9 @@ Public data is not exempt from copyright, attribution, and other legal obligatio
 
 Confidential data is the most common classification and the place where most operational care is needed.
 
-**Storage.** Confidential data is stored only in approved systems. Approved storage at [ORGANIZATION_NAME] includes [APPROVED_STORAGE_PLATFORMS, e.g., Microsoft 365 (OneDrive, SharePoint, Teams), Google Workspace (Drive, Shared Drives), approved file servers, approved SaaS applications]. Confidential data is not stored in personal cloud accounts, personal email, personal devices outside the approved access mechanisms, or unapproved SaaS tools.
+**Storage.** Confidential data is stored only in approved systems. Approved storage at [ORGANIZATION_NAME] includes [APPROVED_STORAGE_PLATFORMS, e.g., the file storage and collaboration services of the approved productivity platform, approved file servers, and approved SaaS applications]. Confidential data is not stored in personal cloud accounts, personal email, personal devices outside the approved access mechanisms, or unapproved SaaS tools.
 
-**Transmission.** Confidential data is transmitted using channels with encryption in transit. Email between approved company systems and major external email systems automatically uses TLS encryption, which is sufficient for most Confidential transmission. For external transmission to less common destinations, confirm that TLS is in use or use a secure file sharing tool.
+**Transmission.** Confidential data is transmitted using channels with encryption in transit. Email between major email providers is usually encrypted in transit with opportunistic TLS, which is sufficient for most Confidential transmission. Opportunistic TLS is not guaranteed: a receiving server that does not support it, or an attacker who strips it, results in an unencrypted delivery. Where a recipient regularly receives Confidential data, enforced TLS for that domain (through a forced-TLS connector or the recipient's MTA-STS policy) closes the gap. Otherwise, use a secure file sharing tool.
 
 **Access.** Confidential data is accessible only to people with a legitimate business need. Sharing follows the access control principles in POL-IAM-001. Sharing externally requires an awareness of who the recipient is and what they will do with the information.
 
@@ -92,7 +92,7 @@ Restricted data has additional requirements beyond what applies to Confidential 
 
 **Storage.** Restricted data is stored only in systems approved specifically for this classification. The approved systems vary by data type:
 
-Authentication credentials live in the approved secrets management platforms described in POL-IAM-002 and POL-IAM-011. They do not live anywhere else.
+Authentication credentials live in the approved secrets management platforms described in STD-IAM-001 and POL-IAM-003. They do not live anywhere else.
 
 Payment card data, where the organization handles it, lives in PCI-compliant payment processing systems. [ORGANIZATION_NAME]'s payment handling approach is documented in [PAYMENT_HANDLING_PROCESS].
 
@@ -102,7 +102,7 @@ Other Restricted data lives in systems that have been specifically approved for 
 
 **Access.** Access to Restricted data is granted to the smallest number of people necessary. Access reviews for Restricted data occur at least quarterly, more frequently for the most sensitive categories.
 
-**Logging.** Access to Restricted data is logged where the storage system supports it. Logs are retained per the [LOGGING_AND_MONITORING_STANDARD] retention requirements.
+**Logging.** Access to Restricted data is logged where the storage system supports it. Logs are retained per the STD-LOG-001 retention requirements.
 
 **Sharing externally.** Restricted data is shared externally only when there is a documented business reason, a confidentiality agreement is in place, and the receiving party has appropriate protections. Sharing Restricted data with a vendor that has not gone through security review is not permitted.
 
@@ -116,7 +116,9 @@ The data owner is distinguished from the system owner. The system owner runs the
 
 Data owners:
 
-Confirm or assign the classification of data in their domain. Approve who has access to the data. Approve external sharing of the data. Determine retention and disposal requirements within applicable legal and regulatory constraints. Communicate handling requirements to people who use the data.
+Confirm or assign the classification of data in their domain. Approve who has access to the data. Approve external sharing of the data. Determine retention and disposal requirements within applicable legal and regulatory constraints. Communicate handling requirements to people who use the data. Record where Confidential and Restricted data in their domain is stored, including file servers, shared drives, and other on-premises locations as well as SaaS applications, and review that record annually.
+
+The records kept by data owners, together with the classification recorded for each SaaS application under STD-AM-001 Section 3.1, form [ORGANIZATION_NAME]'s data inventory.
 
 When a data owner leaves [ORGANIZATION_NAME] or changes roles, data ownership is reassigned within thirty days.
 
@@ -138,7 +140,7 @@ Some data categories warrant specific mention because they are commonly mishandl
 
 **AI tool inputs.** When employees use generative AI tools, the data they paste into the tool's input is treated as if it were stored in the tool. Confidential data goes only into approved AI tools (per POL-AUP-001 Section 3.6). Restricted data is not pasted into AI tools, including approved ones, unless the specific tool has been reviewed and approved for that purpose.
 
-**Data backups and copies.** Backups of data carry the same classification as the original. A backup of Confidential data is Confidential. A backup of Restricted data is Restricted. Backup storage and access controls reflect the classification of the data being backed up.
+**Data backups and copies.** Backups of data carry the same classification as the original. A backup of Confidential data is Confidential. A backup of Restricted data is Restricted. Backup storage and access controls reflect the classification of the data being backed up. STD-DR-001 sets the backup and recovery requirements.
 
 ### 3.10 Exceptions
 
@@ -187,14 +189,17 @@ Honest mistakes reported promptly are handled differently from deliberate violat
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-002: Password and Authentication Standard
-POL-IAM-011: Non-Human Identity Governance Policy
+STD-IAM-001: Password and Authentication Standard
+POL-IAM-003: Non-Human Identity Governance Policy
 POL-AUP-001: Acceptable Use Policy
 POL-AM-001: Asset Management Policy
 POL-IR-001: Incident Response Policy
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming, retention requirements)
+STD-LOG-001: Logging and Monitoring Standard (retention requirements)
 POL-TPRM-001: Third-Party Risk Management Policy (vendor data sharing)
-[DLP_STANDARD]: Data Loss Prevention Standard (forthcoming, technical implementation of handling rules)
+POL-AI-001: AI and Agent Governance Policy (classification rules for AI inputs)
+STD-DC-001: Data Loss Prevention Standard (technical enforcement of the handling rules)
+STD-DC-002: Cryptography and Key Management Standard (encryption minimums, keys, and certificates)
+STD-DR-001: Data Backup and Recovery Standard (backups)
 
 ## 7. Framework Alignment
 
@@ -202,11 +207,11 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-ID.AM-07 (Inventories of data and corresponding metadata for designated data types are maintained). PR.DS-01 (The confidentiality, integrity, and availability of data-at-rest are protected). PR.DS-02 (The confidentiality, integrity, and availability of data-in-transit are protected). PR.DS-10 (The confidentiality, integrity, and availability of data-in-use are protected). PR.DS-11 (Backups of data are created, protected, maintained, and tested).
+ID.AM-07 (Inventories of data and corresponding metadata for designated data types are maintained), partially, through the data owner and classification requirements. PR.DS-01 (The confidentiality, integrity, and availability of data-at-rest are protected). PR.DS-02 (The confidentiality, integrity, and availability of data-in-transit are protected). PR.DS-10 (The confidentiality, integrity, and availability of data-in-use are protected), for AI tool inputs under Section 3.9. Backup creation and testing (PR.DS-11) are outside this policy; Section 3.9 sets only the classification of backups.
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
-Control 3 Data Protection: Safeguards 3.1 (establish and maintain a data management process), 3.2 (establish and maintain a data inventory), 3.3 (configure data access control lists), 3.4 (enforce data retention), 3.5 (securely dispose of data), 3.6 (encrypt data on end-user devices), 3.7 (establish and maintain a data classification scheme), 3.10 (encrypt sensitive data in transit), 3.11 (encrypt sensitive data at rest).
+Control 3 Data Protection: Safeguards 3.1 (establish and maintain a data management process), 3.2 (establish and maintain a data inventory), 3.3 (configure data access control lists), 3.4 (enforce data retention), 3.5 (securely dispose of data), 3.7 (establish and maintain a data classification scheme), 3.10 (encrypt sensitive data in transit), 3.11 (encrypt sensitive data at rest).
 
 ## 8. Revision History
 
@@ -216,4 +221,6 @@ Control 3 Data Protection: Safeguards 3.1 (establish and maintain a data managem
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

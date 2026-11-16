@@ -36,7 +36,7 @@ The policy does not address customer relationships, which involve a different se
 
 ### 3.1 Vendors Are Tiered by Risk
 
-Not every vendor relationship carries the same risk. Trying to apply the same diligence to every vendor is impractical and dilutes attention from the vendors that actually matter. [ORGANIZATION_NAME] tiers vendors based on the risk they pose, and the diligence applied to each vendor matches the tier.
+Not every vendor relationship carries the same risk. Trying to apply the same diligence to every vendor is impractical and dilutes attention from the vendors that matter. [ORGANIZATION_NAME] tiers vendors based on the risk they pose, and the diligence applied to each vendor matches the tier.
 
 **Tier 1 vendors** are those whose compromise or failure would cause significant harm to [ORGANIZATION_NAME] or its stakeholders. Examples include the primary identity provider, the primary file storage platform, vendors holding Restricted data per POL-DC-001, vendors providing critical operational services (payroll, benefits, banking), the primary IT or security service provider, and vendors with privileged access to production systems.
 
@@ -52,7 +52,7 @@ Before [ORGANIZATION_NAME] enters a relationship with a new vendor, the vendor i
 
 **Tier 1 vendor due diligence** includes:
 
-A security questionnaire covering the vendor's security program, controls, certifications, and incident history. Standard questionnaires (SIG, CAIQ) are appropriate; many vendors maintain their answers in trust portals (Whistic, OneTrust, the vendor's own security page) that satisfy this need. A review of the vendor's third-party security audits or certifications (SOC 2 Type II report, ISO 27001 certification, or equivalent attestation appropriate to the vendor's services). Evidence that the vendor handles data per the requirements of POL-DC-001 for the classification of data they will hold. Evidence that the vendor has incident response and notification capabilities. A review of the vendor's known breach history, if any, and how the vendor responded.
+A security questionnaire covering the vendor's security program, controls, certifications, and incident history. Standard questionnaires (SIG, CAIQ) are appropriate; many vendors maintain their answers in a public or gated trust portal that satisfies this need. A review of the vendor's third-party security audits or certifications (SOC 2 Type II report, ISO 27001 certification, or equivalent attestation appropriate to the vendor's services). Evidence that the vendor handles data per the requirements of POL-DC-001 for the classification of data they will hold. Evidence that the vendor has incident response and notification capabilities. A review of the vendor's known breach history, if any, and how the vendor responded.
 
 **Tier 2 vendor due diligence** is lighter:
 
@@ -66,7 +66,7 @@ The due diligence is documented and retained with the vendor's records. The docu
 
 ### 3.3 Contractual Protections
 
-[ORGANIZATION_NAME] negotiates contractual protections appropriate to each vendor's tier. The protections are not always perfectly achievable; they are the targets, and deviations are documented.
+[ORGANIZATION_NAME] negotiates contractual protections appropriate to each vendor's tier. The protections are targets that are not always achievable, and deviations are documented.
 
 **Tier 1 vendor contracts include:**
 
@@ -108,7 +108,7 @@ Vendor access is granted to specific named individuals at the vendor, not to a g
 
 Vendor access has an explicit end date set at provisioning. The end date matches the engagement duration. Ongoing engagements are reviewed annually.
 
-Vendor access uses authentication consistent with POL-IAM-002. Vendors with privileged access use phishing-resistant authentication.
+Vendor access uses authentication consistent with STD-IAM-001. Vendors with privileged access use phishing-resistant authentication.
 
 Vendor administrative access is treated as privileged access per POL-IAM-001 Section 3.5, including the requirements for separate administrative accounts and just-in-time elevation where the platform supports it.
 
@@ -128,7 +128,7 @@ What logging and oversight does the vendor maintain over AI processing of custom
 
 Vendors that use AI in ways that conflict with [ORGANIZATION_NAME]'s data handling expectations or that cannot answer these questions clearly are reconsidered. The reconsideration may be a contract amendment, a change in what data is shared, or termination of the relationship.
 
-This section will likely expand in scope as AI governance practice matures. The current treatment is the appropriate baseline for the present moment.
+This section will expand as AI governance practice matures.
 
 ### 3.7 Sub-Processors and Fourth Parties
 
@@ -160,7 +160,7 @@ For Tier 3 vendors:
 
 Material changes that would cause the vendor to be re-tiered (a change in scope, a significant breach, a change in services) trigger review.
 
-[ORGANIZATION_NAME] uses third-party monitoring services where appropriate to receive notifications about vendor security events. Approved services are [APPROVED_VENDOR_MONITORING, e.g., SecurityScorecard, BitSight, where the value justifies the cost; smaller environments may rely on news monitoring and direct vendor communication].
+[ORGANIZATION_NAME] uses third-party monitoring services where appropriate to receive notifications about vendor security events. Approved services are [APPROVED_VENDOR_MONITORING, e.g., a security ratings or vendor breach monitoring service where the value justifies the cost; smaller environments may rely on news monitoring and direct vendor communication].
 
 ### 3.9 Vendor Incident Coordination
 
@@ -225,13 +225,14 @@ Vendor incidents not escalated through the documented process: reviewed for caus
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy (vendor access provisioning)
-POL-IAM-002: Password and Authentication Standard (vendor authentication requirements)
+STD-IAM-001: Password and Authentication Standard (vendor authentication requirements)
 POL-AM-001: Asset Management Policy (vendor inventory and ongoing tracking)
 POL-DC-001: Data Classification and Handling Policy (data sharing controls)
 POL-IR-001: Incident Response Policy (vendor incident response)
+POL-AI-001: AI and Agent Governance Policy (approval criteria for AI tools)
 POL-AUP-001: Acceptable Use Policy (employee responsibilities for vendor relationships)
 [CONTRACT_REVIEW_PROCESS]: The organization's standard contract review process
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming)
+STD-LOG-001: Logging and Monitoring Standard
 
 ## 7. Framework Alignment
 
@@ -239,9 +240,9 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-GV.SC-01 (A cybersecurity supply chain risk management program is established and managed). GV.SC-02 (Cybersecurity roles and responsibilities for suppliers, customers, and partners are established). GV.SC-03 (Cybersecurity supply chain risk management is integrated into cybersecurity and enterprise risk management programs). GV.SC-04 (Suppliers are known and prioritized by criticality). GV.SC-05 (Requirements to address cybersecurity risks in supply chains are established). GV.SC-06 (Planning and due diligence are performed to reduce risks before entering into formal supplier or other third-party relationships). GV.SC-07 (The risks posed by suppliers, their products, and their services are understood, recorded, prioritized, assessed, responded to, and monitored). GV.SC-08 (Relevant suppliers and other third parties are included in incident planning, response, and recovery activities). GV.SC-09 (Supply chain security practices are integrated into cybersecurity and enterprise risk management programs). GV.SC-10 (Cybersecurity supply chain risk management plans include provisions for activities that occur after the conclusion of a partnership or service agreement).
+GV.SC-01 (A cybersecurity supply chain risk management program, strategy, objectives, policies, and processes are established and agreed to by organizational stakeholders). GV.SC-02 (Cybersecurity roles and responsibilities for suppliers, customers, and partners are established). GV.SC-03 (Cybersecurity supply chain risk management is integrated into cybersecurity and enterprise risk management programs). GV.SC-04 (Suppliers are known and prioritized by criticality). GV.SC-05 (Requirements to address cybersecurity risks in supply chains are established). GV.SC-06 (Planning and due diligence are performed to reduce risks before entering into formal supplier or other third-party relationships). GV.SC-07 (The risks posed by suppliers, their products, and their services are understood, recorded, prioritized, assessed, responded to, and monitored). GV.SC-08 (Relevant suppliers and other third parties are included in incident planning, response, and recovery activities). GV.SC-09 (Supply chain security practices are integrated into cybersecurity and enterprise risk management programs). GV.SC-10 (Cybersecurity supply chain risk management plans include provisions for activities that occur after the conclusion of a partnership or service agreement).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
 Control 15 Service Provider Management: Safeguards 15.1 (establish and maintain an inventory of service providers), 15.2 (establish and maintain a service provider management policy), 15.3 (classify service providers), 15.4 (ensure service provider contracts include security requirements), 15.5 (assess service providers), 15.6 (monitor service providers), 15.7 (securely decommission service providers).
 
@@ -253,4 +254,6 @@ Control 15 Service Provider Management: Safeguards 15.1 (establish and maintain 
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

@@ -18,7 +18,7 @@ This policy defines how [ORGANIZATION_NAME] protects the devices that connect to
 
 The reason endpoint protection matters is direct. Devices are where users do their work, and where attackers most often gain a foothold. A compromised endpoint is the typical starting point for ransomware, business email compromise, and data theft. Strong endpoint protection does not prevent every attack, but it raises the cost of compromise, catches attacks faster when they happen, and limits the damage when they succeed.
 
-This policy works alongside POL-AM-001 (Asset Management Policy), which tracks what devices exist, and POL-IAM-005 (Remote Access Policy), which defines what devices can connect to company resources. The endpoint protection policy adds the security configuration and protection requirements those devices must meet.
+This policy works alongside POL-AM-001 (Asset Management Policy), which tracks what devices exist, and POL-IAM-002 (Remote Access Policy), which defines what devices can connect to company resources. The endpoint protection policy adds the security configuration and protection requirements those devices must meet.
 
 ## 2. Scope
 
@@ -26,9 +26,9 @@ This policy applies to all devices that store [ORGANIZATION_NAME] data, access [
 
 Laptops and desktops issued by [ORGANIZATION_NAME], whether running Windows, macOS, ChromeOS, or Linux. Servers operated by [ORGANIZATION_NAME], whether on-premises, in cloud platforms, or hosted by a service provider. Mobile devices accessing company email, files, or applications, whether company-issued or personal. Tablets used for company work. Embedded and specialized devices where applicable (point-of-sale terminals, kiosks, industrial equipment that connects to company networks).
 
-For personal devices used to access company resources under BYOD arrangements, the requirements are documented in POL-IAM-005 and POL-AUP-001. The endpoint protection requirements in this policy apply where they are technically possible without compromising the personal nature of the device.
+For personal devices used to access company resources under BYOD arrangements, the requirements are documented in POL-IAM-002 and POL-AUP-001. The endpoint protection requirements in this policy apply where they are technically possible without compromising the personal nature of the device.
 
-The policy does not cover network equipment (routers, switches, firewalls, access points), which is addressed in [NETWORK_SECURITY_POLICY] (forthcoming).
+The policy does not cover network equipment (routers, switches, firewalls, access points), which is addressed in POL-NET-001.
 
 ## 3. Policy Statements
 
@@ -36,7 +36,9 @@ The policy does not cover network equipment (routers, switches, firewalls, acces
 
 Every endpoint runs a defined baseline configuration appropriate to its operating system and role. The baseline establishes the starting state for security controls and is verified through device management tooling.
 
-For Windows endpoints, the baseline includes appropriate Group Policy or Intune configuration profiles, including BitLocker encryption, Microsoft Defender configuration, Windows Update configuration, and Microsoft Defender Application Control or AppLocker where supported.
+Every baseline, on every platform, includes these common elements: automatic screen lock after no more than fifteen minutes of inactivity on laptops, desktops, and servers with interactive sessions; a host-based firewall, managed centrally, with a default-deny inbound rule that allows only the services the device needs; and default accounts disabled, or renamed with their credentials changed, before the device is placed in service.
+
+For Windows endpoints, the baseline includes Group Policy or device management configuration profiles covering BitLocker encryption, the built-in anti-malware and attack surface reduction settings where the EDR platform relies on them, Windows Update configuration, autorun and autoplay disabled for removable media, and App Control for Business (formerly Windows Defender Application Control) or AppLocker where supported.
 
 For macOS endpoints, the baseline is enforced through Mobile Device Management with a configuration profile that includes FileVault encryption, Gatekeeper enforcement, system integrity protection (which is enabled by default and not disabled), and approved security tooling.
 
@@ -46,13 +48,13 @@ For Linux servers and Linux endpoints, the baseline includes a hardening standar
 
 For mobile devices, the baseline is enforced through MDM with a configuration profile that includes screen lock with timeout, encryption (which is the default on current iOS and Android), application restrictions where appropriate, and the ability to remotely wipe company data.
 
-The baseline is reviewed annually and updated as the platform and threat landscape change. Devices that drift from baseline are flagged by the device management tooling for remediation.
+The baseline is reviewed annually and updated as the platforms and threats change. Devices that drift from baseline are flagged by the device management tooling for remediation.
 
 ### 3.2 Anti-Malware and Endpoint Detection and Response
 
 Every endpoint runs a current anti-malware and endpoint detection and response (EDR) capability appropriate to its operating system. Anti-malware alone (signature-based detection) is no longer sufficient against modern threats. EDR provides behavioral detection, telemetry collection, and response capability.
 
-Approved EDR platforms for [ORGANIZATION_NAME] are [APPROVED_EDR_PLATFORMS, e.g., Microsoft Defender for Endpoint, CrowdStrike Falcon, SentinelOne, Huntress Managed EDR]. The specific platform is documented in the asset management records for each device.
+Approved EDR platforms for [ORGANIZATION_NAME] are [APPROVED_EDR_PLATFORMS, e.g., an EDR platform with behavioral detection, tamper protection, remote isolation, and telemetry export to the central logging platform]. The specific platform is documented in the asset management records for each device.
 
 The EDR configuration:
 
@@ -74,7 +76,7 @@ Windows endpoints use BitLocker with a strong protector (TPM plus PIN for sensit
 
 macOS endpoints use FileVault. Recovery keys are escrowed through the MDM system.
 
-Linux endpoints use the encryption mechanism appropriate to the distribution and use case. Servers in the cloud typically use the platform's native encryption (Azure Disk Encryption, AWS EBS encryption, GCP persistent disk encryption). Linux laptops and desktops use LUKS or equivalent.
+Linux endpoints use the encryption mechanism appropriate to the distribution and use case. Servers in the cloud use the platform's managed disk encryption, which the major platforms enable at rest by default; the configuration is confirmed rather than assumed, and host-based or customer-managed-key encryption is used where the data classification calls for it. Linux laptops and desktops use LUKS or equivalent.
 
 ChromeOS devices have encryption enabled by default through the platform's design. No additional configuration is required.
 
@@ -88,25 +90,23 @@ Every endpoint receives operating system and security updates promptly. The patc
 
 Default cadences:
 
-Critical security updates and updates addressing actively exploited vulnerabilities: applied within fourteen days of release. Faster timelines apply during active exploitation campaigns.
+Security updates follow the priority tiers and remediation cadences in POL-VM-001 Section 3.3: Critical priority within seven days, High priority within fourteen days, and Medium priority within thirty days of identification. Updates addressing actively exploited vulnerabilities on internet-facing systems follow POL-VM-001 Section 3.5 and may require faster action.
 
-High-severity security updates not actively exploited: applied within thirty days.
-
-Standard updates (operating system updates, application updates without specific security severity): applied within sixty days.
+Standard updates (operating system feature updates, application updates without specific security severity): applied within sixty days.
 
 These cadences apply to operating systems and to applications installed on the endpoint. Browsers (which are a primary attack surface) are kept current with the latest stable release.
 
-For servers and other systems where update windows are constrained by operational considerations (uptime requirements, change windows), the cadence may extend longer but no further than ninety days for security updates without documented exception. Exceptions follow the process in Section 3.10.
+For servers and other systems where update windows are constrained by operational considerations (uptime requirements, change windows), Medium and Low priority security updates may extend to ninety days without documented exception. Critical and High priority updates that cannot meet the POL-VM-001 cadence get compensating controls within that cadence and a documented exception under Section 3.10.
 
 Devices that cannot be patched (end-of-life operating systems, embedded systems with locked firmware, vendor-managed systems) are documented as exceptions and isolated from the rest of the environment to limit blast radius.
 
-The vulnerability management policy ([VULNERABILITY_MANAGEMENT_POLICY], forthcoming) covers the broader process of identifying and prioritizing vulnerabilities. This policy covers the specific operational requirements for keeping endpoints current.
+The vulnerability management policy (POL-VM-001) covers the broader process of identifying and prioritizing vulnerabilities. This policy covers the specific operational requirements for keeping endpoints current.
 
 ### 3.5 Application Control and Software Installation
 
 Endpoints are configured so that only authorized software runs. The mechanisms vary by platform:
 
-Windows endpoints use Microsoft Defender Application Control, AppLocker, or equivalent application control where the operating system edition supports it. For editions where application control is not available, software installation is restricted through standard user accounts (users do not have local administrator rights) and inventory monitoring through the EDR or device management platform.
+Windows endpoints use App Control for Business, AppLocker, or equivalent application control where the operating system edition supports it, including script rules where the platform supports them. For editions where application control is not available, software installation is restricted through standard user accounts (users do not have local administrator rights) and inventory monitoring through the EDR or device management platform.
 
 macOS endpoints rely on Gatekeeper for code signing enforcement, supplemented by application allowlisting through MDM where the environment requires stricter control.
 
@@ -122,11 +122,11 @@ The list of approved software is maintained by the IT function, consistent with 
 
 ### 3.6 Mobile Device Management
 
-Mobile devices accessing [ORGANIZATION_NAME] resources are enrolled in the company's mobile device management system. Approved MDM platforms are [APPROVED_MDM_PLATFORMS, e.g., Microsoft Intune, Google Workspace Device Management, Jamf Pro].
+Mobile devices accessing [ORGANIZATION_NAME] resources are enrolled in the company's mobile device management system. Approved MDM platforms are [APPROVED_MDM_PLATFORMS, e.g., the device management service of the approved productivity platform, or a dedicated MDM that supports the organization's device mix].
 
 MDM configuration enforces:
 
-Screen lock with a timeout appropriate to the device class (typically five to fifteen minutes). Strong authentication on the device (biometric or PIN of sufficient length). Encryption (default on current iOS and Android). The ability to remotely wipe company data without affecting personal data on personal devices. Restrictions on application installation, where appropriate. Compliance verification (jailbroken or rooted devices are blocked from accessing company resources).
+Screen lock after no more than two minutes of inactivity, consistent with CIS Safeguard 4.3 for mobile devices. Strong authentication on the device (biometric or PIN of sufficient length). Encryption (default on current iOS and Android). The ability to remotely wipe company data without affecting personal data on personal devices. Restrictions on application installation, where appropriate. Compliance verification (jailbroken or rooted devices are blocked from accessing company resources).
 
 For company-issued mobile devices, the MDM may enforce additional restrictions appropriate to the device's role.
 
@@ -138,7 +138,7 @@ Endpoints generate logs that support detection and incident response. Logs inclu
 
 Authentication events (sign-in attempts, account lockouts). Application execution events from the EDR or equivalent platform. Privileged action events (administrative logon, privilege escalation, security tool changes). System integrity events (boot integrity, security tool tampering attempts). Network connection events from the EDR where applicable.
 
-Logs are sent to the central logging platform within fifteen minutes of the event. Local logs on the endpoint are retained for at least seven days as a backup. Centralized logs are retained per the [LOGGING_AND_MONITORING_STANDARD] (forthcoming).
+Logs are sent to the central logging platform within fifteen minutes of the event. Local logs on the endpoint are retained for at least seven days as a backup. Centralized logs are retained per STD-LOG-001.
 
 The EDR platform telemetry is the primary source of endpoint logging. Native operating system audit logs supplement the EDR telemetry where the EDR does not capture the relevant events.
 
@@ -188,7 +188,7 @@ Exceptions follow the process in POL-IAM-001 Section 3.10. No exception runs lon
 
 **Department leads and managers.** Ensure their team members comply with the policy. Notify IT promptly when team members leave or change roles. Approve requests for non-standard configurations affecting their teams.
 
-**All users.** Use only [ORGANIZATION_NAME]-approved devices for company work, except as permitted by the BYOD provisions in POL-IAM-005 and POL-AUP-001. Do not disable or interfere with security controls on company devices. Report lost, stolen, or compromised devices immediately. Cooperate with patching and update activities.
+**All users.** Use only [ORGANIZATION_NAME]-approved devices for company work, except as permitted by the BYOD provisions in POL-IAM-002 and POL-AUP-001. Do not disable or interfere with security controls on company devices. Report lost, stolen, or compromised devices immediately. Cooperate with patching and update activities.
 
 ## 5. Enforcement
 
@@ -196,20 +196,23 @@ Violations of this policy may result in loss of device access, escalation to the
 
 Specific remediation timelines:
 
-Devices not in baseline configuration: remediated within thirty days of identification. Devices without active EDR: remediated within seven days of identification, or the device is removed from the network. Devices with disk encryption disabled: encryption enabled within seven days of identification. Critical security patches not applied within fourteen days: investigated for cause and remediated within an additional fourteen days. Lost or stolen devices not reported promptly: addressed through user training and management coaching for first occurrences.
+Devices not in baseline configuration: remediated within thirty days of identification. Devices without active EDR: remediated within seven days of identification, or the device is removed from the network. Devices with disk encryption disabled: encryption enabled within seven days of identification. Critical priority security updates not applied within seven days: investigated for cause and escalated per POL-VM-001 Section 5. Lost or stolen devices not reported promptly: addressed through user training and management coaching for first occurrences.
 
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-005: Remote Access Policy (managed device requirements for remote access)
-POL-IAM-011: Non-Human Identity Governance Policy (service accounts on endpoints)
+POL-IAM-002: Remote Access Policy (managed device requirements for remote access)
+POL-IAM-003: Non-Human Identity Governance Policy (service accounts on endpoints)
 POL-AUP-001: Acceptable Use Policy (user responsibilities for endpoints)
 POL-AM-001: Asset Management Policy (endpoint inventory)
 POL-DC-001: Data Classification and Handling Policy (data on endpoints)
 POL-IR-001: Incident Response Policy (compromised endpoint response)
 POL-VM-001: Vulnerability Management Policy (broader vulnerability process)
 POL-NET-001: Network Security Policy (network-level controls)
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming, log retention)
+STD-LOG-001: Logging and Monitoring Standard (log retention)
+STD-NET-001: Email and Web Browser Protection Standard (browser and extension management)
+STD-OPS-001: Change Management Standard (changes to baselines)
+STD-DR-001: Data Backup and Recovery Standard (endpoints are rebuilt, data is synced)
 
 ## 7. Framework Alignment
 
@@ -217,17 +220,21 @@ This policy supports the following controls.
 
 **NIST Cybersecurity Framework 2.0:**
 
-PR.PS-01 (Configuration management practices are established and applied). PR.PS-02 (Software is maintained, replaced, and removed commensurate with risk). PR.PS-03 (Hardware is maintained, replaced, and removed commensurate with risk). PR.PS-05 (Installation and execution of unauthorized software are prevented). PR.PS-06 (Secure software development practices are integrated). PR.DS-01 (The confidentiality, integrity, and availability of data-at-rest are protected). DE.CM-01 (Networks and personnel activity are monitored). DE.CM-09 (Computing hardware and software, runtime environments, and their data are monitored).
+PR.PS-01 (Configuration management practices are established and applied). PR.PS-02 (Software is maintained, replaced, and removed commensurate with risk). PR.PS-03 (Hardware is maintained, replaced, and removed commensurate with risk). PR.PS-05 (Installation and execution of unauthorized software are prevented). PR.DS-01 (The confidentiality, integrity, and availability of data-at-rest are protected). DE.CM-09 (Computing hardware and software, runtime environments, and their data are monitored).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
-Control 4 Secure Configuration of Enterprise Assets and Software: Safeguards 4.1 (establish and maintain a secure configuration process), 4.2 (establish and maintain a secure configuration process for network infrastructure), 4.3 (configure automatic session locking), 4.4 (implement and manage a firewall on servers), 4.5 (implement and manage a firewall on end-user devices), 4.6 (securely manage enterprise assets and software), 4.7 (manage default accounts on enterprise assets and software).
+Control 2 Inventory and Control of Software Assets: Safeguards 2.5 (allowlist authorized software) and 2.7 (allowlist authorized scripts), where the platform supports application control.
+
+Control 3 Data Protection: Safeguards 3.6 (encrypt data on end-user devices) and 3.9 (encrypt data on removable media).
+
+Control 4 Secure Configuration of Enterprise Assets and Software: Safeguards 4.1 (establish and maintain a secure configuration process), 4.3 (configure automatic session locking), 4.4 (implement and manage a firewall on servers), 4.5 (implement and manage a firewall on end-user devices), 4.6 (securely manage enterprise assets and software), 4.7 (manage default accounts on enterprise assets and software).
 
 Control 7 Continuous Vulnerability Management: Safeguards 7.3 (perform automated operating system patch management), 7.4 (perform automated application patch management).
 
 Control 10 Malware Defenses: Safeguards 10.1 (deploy and maintain anti-malware software), 10.2 (configure automatic anti-malware signature updates), 10.3 (disable autorun and autoplay for removable media), 10.7 (use behavior-based anti-malware software).
 
-Control 13 Network Monitoring and Defense: Safeguards related to endpoint monitoring.
+Control 13 Network Monitoring and Defense: Safeguards 13.2 (deploy a host-based intrusion detection solution) and 13.7 (deploy a host-based intrusion prevention solution), both met by the EDR platform in active protection mode.
 
 ## 8. Revision History
 
@@ -237,4 +244,6 @@ Control 13 Network Monitoring and Defense: Safeguards related to endpoint monito
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

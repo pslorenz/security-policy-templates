@@ -52,7 +52,7 @@ Each user has their own account. Sharing accounts is not allowed. If two people 
 
 Users do not share their passwords with anyone, including IT staff, managers, or coworkers. IT will never ask for a password. Anyone who does is impersonating IT or doing something they should not be.
 
-Users use the company-approved password manager (specified in POL-IAM-002) for all work credentials. Passwords are not stored in browsers on shared devices, in email, in chat, in spreadsheets, or in notes apps.
+Users use the company-approved password manager (specified in STD-IAM-001) for all work credentials. Passwords are not stored in browsers on shared devices, in email, in chat, in spreadsheets, or in notes apps.
 
 Users enable multi-factor authentication on their accounts and keep their authentication methods (hardware key, authenticator app, recovery codes) physically secure. Lost or stolen authentication devices are reported immediately so they can be disabled.
 
@@ -60,7 +60,7 @@ Users do not attempt to access systems or data they have not been authorized for
 
 ### 3.3 Data Handling
 
-Company data is handled according to its sensitivity. The data classification policy ([DATA_CLASSIFICATION_POLICY], forthcoming) defines the classification levels and the specific handling rules for each. In summary:
+Company data is handled according to its sensitivity. The data classification policy (POL-DC-001) defines the classification levels and the specific handling rules for each. In summary:
 
 **Public data** (information that has been intentionally released for public consumption) can be shared freely.
 
@@ -98,9 +98,9 @@ If a user has a legitimate business need to access something the security contro
 
 ### 3.6 Use of Generative AI Tools
 
-Generative AI tools (ChatGPT, Claude, Microsoft Copilot, Google Gemini, GitHub Copilot, and similar) are powerful, useful, and easy to misuse. The basic rule: company-approved AI tools are encouraged for work where they help, and unapproved tools are not used with company data.
+Generative AI tools (chat assistants, AI features built into productivity suites, coding assistants, and similar) are useful and easy to misuse. The basic rule: company-approved AI tools are encouraged for work where they help, and unapproved tools are not used with company data.
 
-Approved AI tools at [ORGANIZATION_NAME] are [APPROVED_AI_TOOLS, e.g., Microsoft Copilot for M365, Claude Enterprise, ChatGPT Enterprise]. Approved tools have business agreements that protect company data, do not use company data to train public models, and offer appropriate logging and oversight.
+Approved AI tools at [ORGANIZATION_NAME] are [APPROVED_AI_TOOLS, e.g., business or enterprise tiers of AI assistants covered by a data protection agreement, and AI features of the approved productivity platform]. Approved tools have business agreements that protect company data, do not use company data to train public models, and offer appropriate logging and oversight.
 
 When using approved AI tools, users:
 
@@ -112,7 +112,9 @@ Do not use AI tools to generate content that misrepresents the user's identity (
 
 Do not use AI tools to circumvent other policies. An AI tool that helps the user produce something faster does not change whether the underlying activity is acceptable.
 
-For code-generating AI tools (GitHub Copilot, Cursor, similar), the user remains responsible for the code that ends up in production. Generated code is reviewed for security, correctness, and license compliance the same as code written by hand.
+For code-generating AI tools, the user remains responsible for the code that ends up in production. Generated code is reviewed for security, correctness, and license compliance the same as code written by hand.
+
+Connecting an AI tool, browser extension, or agent to a company account, using an AI meeting assistant, and letting an agent take actions on a user's behalf all follow POL-AI-001 (AI and Agent Governance Policy). Users do not connect AI tools to company email, files, or systems on their own authority.
 
 When in doubt about whether an AI tool is approved or how it can be used, users ask the IT or Information Security function before using it.
 
@@ -120,7 +122,7 @@ When in doubt about whether an AI tool is approved or how it can be used, users 
 
 Users may access certain [ORGANIZATION_NAME] resources from personal devices (smartphones, tablets, personal laptops) under the following conditions.
 
-The personal device meets the requirements in POL-IAM-005 (Remote Access Policy). Specifically, mobile devices are enrolled in the company device management system, and personal computers used for work are encrypted and meet basic security standards.
+The personal device meets the requirements in POL-IAM-002 (Remote Access Policy). Specifically, mobile devices are enrolled in the company device management system, and personal computers used for work are encrypted and meet basic security standards.
 
 Company data on personal devices is accessed through approved applications (the official Microsoft 365 mobile apps, the official Google Workspace mobile apps, the approved remote access tool). Company data is not synced to personal cloud services, personal storage, or personal email.
 
@@ -144,9 +146,9 @@ Users are the company's first line of detection for many security and operationa
 
 Users report:
 
-Suspected phishing or social engineering attempts. Suspected account compromise (unexpected password reset emails, unrecognized sign-in alerts, suspicious activity on their accounts). Lost or stolen company devices. Lost or stolen authentication devices (hardware keys, phones with authenticator apps). Accidental disclosure of company data (a wrong recipient, a wrong attachment, a public post that should have been private). Suspicious behavior on company systems, whether by people or by automated activity. Anything else that feels wrong.
+Suspected phishing or social engineering attempts. Suspected account compromise (unexpected password reset emails, unrecognized sign-in alerts, suspicious activity on their accounts). Lost or stolen company devices. Lost or stolen authentication devices (hardware keys, phones with authenticator apps). Devices that are not receiving security updates: an update prompt that keeps reappearing, an update that fails, or a device that has not restarted to finish updating in more than a week. Accidental disclosure of company data (a wrong recipient, a wrong attachment, a public post that should have been private). Suspicious behavior on company systems, whether by people or by automated activity. Anything else that feels wrong.
 
-Reporting goes to the IT or Information Security function through [REPORTING_CHANNEL, e.g., a dedicated email address, a helpdesk ticket, a Slack channel].
+Reporting goes to the IT or Information Security function through [REPORTING_CHANNEL, e.g., a dedicated email address, a helpdesk ticket, a dedicated chat channel].
 
 Users who report problems in good faith are not penalized for the report, even if the problem turns out to be the user's mistake. Mistakes happen. Hidden mistakes become incidents.
 
@@ -195,14 +197,17 @@ Theft of company data, intentional misuse of access, or other malicious activity
 ## 6. Related Documents
 
 POL-IAM-001: Access Control Policy
-POL-IAM-002: Password and Authentication Standard
-POL-IAM-005: Remote Access Policy
-POL-IAM-006: Single Sign-On and Federation Standard
-POL-IAM-011: Non-Human Identity Governance Policy
+STD-IAM-001: Password and Authentication Standard
+POL-IAM-002: Remote Access Policy
+STD-IAM-002: Single Sign-On and Federation Standard
+POL-IAM-003: Non-Human Identity Governance Policy
 POL-DC-001: Data Classification and Handling Policy
-POL-AUP-001: Incident Response Policy
-POL-AUP-001: Endpoint Protection Policy
-[AI_GOVERNANCE_POLICY]: AI and Agent Governance Policy (forthcoming, will expand on Section 3.6)
+POL-IR-001: Incident Response Policy
+POL-EP-001: Endpoint Protection Policy
+STD-NET-001: Email and Web Browser Protection Standard
+STD-DC-001: Data Loss Prevention Standard
+TPL-AUP-001: Policy Acknowledgment Form and Log
+POL-AI-001: AI and Agent Governance Policy (governance behind Section 3.6)
 
 ## 7. Framework Alignment
 
@@ -212,13 +217,13 @@ This policy supports the following controls.
 
 GV.RR-04 (Cybersecurity is included in human resources practices). PR.AT-01 (Personnel are provided with awareness and training so that they possess the knowledge and skills to perform general tasks with cybersecurity risks in mind). PR.AT-02 (Individuals in specialized roles are provided with awareness and training so that they possess the knowledge and skills to perform relevant tasks with cybersecurity risks in mind). PR.PS-01 (Configuration management practices are established and applied). PR.DS-01 (The confidentiality, integrity, and availability of data-at-rest are protected).
 
-**CIS Controls v8:**
+**CIS Controls v8.1:**
 
 Control 14 Security Awareness and Skills Training: Safeguards 14.1 (establish and maintain a security awareness program), 14.2 (train workforce members to recognize social engineering attacks), 14.3 (train workforce members on authentication best practices), 14.4 (train workforce on data handling best practices), 14.6 (train workforce members on recognizing and reporting security incidents).
 
-Control 4 Secure Configuration of Enterprise Assets and Software: Selected safeguards related to user-installed software.
+Control 2 Inventory and Control of Software Assets: Safeguard 2.3 (address unauthorized software), through the installation rules in Section 3.8.
 
-Control 6 Access Control Management: Safeguards related to user behavior in access control.
+Control 5 Account Management: Safeguard 5.2 (use unique passwords), through the account security rules in Section 3.2.
 
 ## 8. Revision History
 
@@ -228,4 +233,6 @@ Control 6 Access Control Management: Safeguards related to user behavior in acce
 
 ---
 
-*This policy is issued under the authority of the executive sponsor listed above. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This policy is issued under the authority of the executive sponsor listed above.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

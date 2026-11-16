@@ -6,7 +6,7 @@
 
 ## About this document
 
-This is a client-facing explainer designed to introduce non-technical business owners to the concept and importance of non-human identity governance. It pairs with POL-IAM-011 (Non-Human Identity Governance Policy) and RUN-IAM-011 (Non-Human Identity Discovery Runbook), which are the operational documents.
+This is a client-facing explainer designed to introduce non-technical business owners to the concept and importance of non-human identity governance. It pairs with POL-IAM-003 (Non-Human Identity Governance Policy) and RUN-IAM-001 (Non-Human Identity Discovery Runbook), which are the operational documents.
 
 The voice uses "we" throughout, intended to be read as the organization's security function, IT team, or external security service provider speaking to the executive sponsor or business owner. Adopters should leave this voice in place. It works whether the document is delivered by an internal team or by an external service provider. Replacing "we" with an organization name or a service provider name flattens the document.
 
@@ -16,21 +16,21 @@ Replace bracketed placeholders ([ESTIMATED_PROGRAM_COST], [TIMELINE_WEEKS]) with
 
 ## The short version
 
-Your organization has more accounts than you have employees. Many more. Every integration between systems, every automation that moves data from point A to point B, every cloud service that talks to another cloud service, every Power Automate flow that someone built to save time on a weekly report: all of these run on accounts that are not tied to a person. The industry calls them non-human identities.
+Your organization has more accounts than you have employees. Many more. Every integration between systems, every automation that moves data from point A to point B, every cloud service that talks to another cloud service, every automated workflow that someone built to save time on a weekly report: all of these run on accounts that are not tied to a person. The industry calls them non-human identities.
 
-In a typical organization, there are roughly forty-five non-human accounts for every human user. A fifty-person company likely has over two thousand of them. Most organizations have no list of what they are, who owns them, or what they can access.
+Vendor research on large enterprises reports dozens of non-human accounts for every employee. Organizations your size usually have fewer, but nearly always more than anyone has counted. Most organizations have no list of what they are, who owns them, or what they can access.
 
-> An account with broad access and no named owner is a credential waiting to be used by someone who should not have it. Attackers do not need to breach your email to cause damage. They can take over a forgotten service account and walk through the front door.
+An account with broad access and no named owner is a credential waiting to be used by someone who should not have it. Attackers do not need to breach your email to cause damage. They can take over a forgotten service account and walk through the front door.
 
 ## Why this matters right now
 
 Three changes in the threat environment make this problem urgent rather than theoretical.
 
-First, the time from when a vulnerability is discovered to when it is actively exploited has dropped from months to hours. Attackers now use AI tools that find exploitable weaknesses faster than defenders can patch them. Non-human accounts are a favorite target because they often have strong permissions and weak oversight.
+First, the time from when a vulnerability is disclosed to when it is actively exploited has dropped from months to days, and for some vulnerabilities to hours. Attackers use automation and AI tools to find exploitable weaknesses faster than many defenders can patch them. Non-human accounts are an attractive target because they often have strong permissions and weak oversight.
 
-Second, cyber insurance carriers have rewritten their requirements around identity governance. Documented governance of non-human identities has moved from a nice-to-have item on the questionnaire to a bind-or-not-bind decision. Organizations without a program in place are seeing premium increases or coverage denials.
+Second, cyber insurance carriers are asking harder questions about identity. Applications that once asked only about MFA now ask about privileged accounts, service accounts, and how access is reviewed. A documented program gives you real answers on the application and at renewal.
 
-Third, AI agents and automation tools are creating new non-human identities faster than anyone is tracking them. Every Copilot integration, every coding assistant with access to a repository, every AI-powered workflow your team builds, creates another account that can act inside your environment. These are the next generation of non-human identities, and the pattern of forgetting about them is already repeating.
+Third, AI agents and automation tools are creating new non-human identities faster than anyone is tracking them. Every AI assistant connected to your files or email, every coding assistant with access to a repository, every AI-powered workflow your team builds, creates another account that can act inside your environment. These are the next generation of non-human identities, and the pattern of forgetting about them is already repeating.
 
 ## What we are doing
 
@@ -50,7 +50,7 @@ Every ninety days, the named owner confirms the account is still needed and stil
 
 ### Four: We are going to watch the active ones
 
-The accounts that remain get monitored. If a non-human account starts doing things outside of its normal pattern (signing in from an unexpected location, accessing systems it has not touched before, creating new permissions for itself), the security operation is alerted and investigates. This is how we catch an attacker who has taken over a legitimate account, which is the most common breach pattern against this class of identity.
+The accounts that remain get monitored. If a non-human account starts doing things outside of its normal pattern (signing in from an unexpected location, accessing systems it has not touched before, creating new permissions for itself), the security operation is alerted and investigates. This is how we catch an attacker who has taken over a legitimate account, which is how this class of identity is usually abused.
 
 ## What we need from you
 
@@ -66,17 +66,17 @@ The program requires a small amount of executive support and a larger amount of 
 
 ## What it costs and what it returns
 
-The program requires time from your team and a modest investment in tooling, most of which is already in your environment and simply not being used. For an organization in your size range, the direct cost is roughly [ESTIMATED_PROGRAM_COST] in internal time and, potentially, one additional tool license.
+The program requires time from your team and a modest investment in tooling, most of which is already in your environment and not being used. For an organization in your size range, the direct cost is roughly [ESTIMATED_PROGRAM_COST] in internal time and, potentially, one additional tool license.
 
 The returns show up in three places.
 
-Your cyber insurance renewal goes better, either through avoided premium increases or through maintained coverage that would otherwise be denied.
+Your cyber insurance application and renewal go better, because you can answer the identity questions with evidence instead of estimates.
 
-Your incident exposure drops measurably. The majority of successful breaches at organizations your size involve compromised non-human identities, and a governed environment is a significantly harder target.
+Your incident exposure drops. Fewer forgotten accounts with broad access means fewer quiet ways in, and the ones that remain are watched.
 
 Your operational posture becomes explainable. When an auditor, a client, or a prospect asks how you manage access across your systems, you have a real answer.
 
-> The accounts you forgot you had are the accounts an attacker will use. The program turns a forgotten problem into a managed one, and it does so in a way that scales with your business rather than adding to the friction of running it.
+The accounts you forgot you had are the accounts an attacker will use. The program turns a forgotten problem into a managed one, and it scales with your business rather than adding to the friction of running it.
 
 ## Next steps
 
@@ -94,4 +94,4 @@ Questions regarding this document or the program can be directed to your securit
 
 ---
 
-*Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*

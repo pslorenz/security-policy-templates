@@ -2,14 +2,15 @@ Security Policy Templates
 
 Copyright (c) 2026 P. Steven Lorenz
 
-This work is licensed under the Creative Commons Attribution-ShareAlike 4.0
-International License (CC BY-SA 4.0).
+This work is licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+Scope: this license covers the documents, templates, and documentation in this
+repository. The software in scripts/ and tests/ is licensed separately under
+the MIT License; see LICENSE-CODE.
 
 To view a copy of this license, visit:
-  https://creativecommons.org/licenses/by-sa/4.0/
-
-Or send a letter to:
-  Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+  https://creativecommons.org/licenses/by/4.0/
 
 ================================================================================
 
@@ -31,10 +32,6 @@ Under the following terms:
                 any reasonable manner, but not in any way that suggests the
                 licensor endorses you or your use.
 
-  ShareAlike  - If you remix, transform, or build upon the material, you must
-                distribute your contributions under the same license as the
-                original.
-
   No additional restrictions - You may not apply legal terms or technological
                                measures that legally restrict others from
                                doing anything the license permits.
@@ -43,16 +40,24 @@ Under the following terms:
 
 ATTRIBUTION REQUIREMENTS FOR THIS WORK
 
-When sharing this work or derivative works, attribution must include:
+When sharing this work or derivative works publicly, attribution must include:
 
   - The original author: P. Steven Lorenz
   - A link to the original repository: https://github.com/pslorenz/security-policy-templates
-  - The license: Creative Commons Attribution-ShareAlike 4.0 International
+  - The license: Creative Commons Attribution 4.0 International
   - An indication of any changes made
 
-Each document in this library contains a closing attribution line that satisfies
-these requirements when preserved in derivative works. Do not remove the
-attribution line when adapting the documents.
+Attribution may be given once for a collection, for example in a README or a
+NOTICE file distributed with it. It does not need to appear in each document.
+
+Organizations adopting documents for their own internal use do not need to
+credit the source in those documents. Each document carries a closing line
+that says so, and that line may be removed. scripts/generate.py removes it by
+default and writes a NOTICE file with the generated documents instead.
+
+Anyone who redistributes the library, or a collection of documents derived
+from it, to others (for example, a provider publishing a policy pack) must give
+the credit described above.
 
 ================================================================================
 
@@ -71,10 +76,10 @@ and risk profile.
 
 FULL LEGAL CODE
 
-The complete legal code of the Creative Commons Attribution-ShareAlike 4.0
+The complete legal code of the Creative Commons Attribution 4.0
 International Public License is available at:
 
-  https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  https://creativecommons.org/licenses/by/4.0/legalcode
 
 Maintainer note: The full legal code text should be appended below this line
 before publishing the repository. Download the canonical text from the URL

@@ -12,7 +12,7 @@
 
 ---
 
-## 1. Purpose
+## 1. Purpose and Scope
 
 This runbook operationalizes POL-IR-001 for the incident types most commonly faced by small and mid-market organizations. It provides step-by-step playbooks that the response team follows during active incidents, plus the communication templates and decision frameworks that support the response.
 
@@ -20,7 +20,7 @@ The runbook does not replace the policy. POL-IR-001 establishes the response fra
 
 The runbook covers five incident scenarios: account compromise, ransomware, business email compromise, lost or stolen device, and phishing campaign response. These scenarios cover the majority of incidents at SMB scale. Other incident types are addressed by adapting the patterns established here.
 
-## 2. Before the Incident: What Should Already Be in Place
+## 2. Prerequisites
 
 The response works only if the foundation is in place before anything happens. The following items are confirmed during quarterly tabletop exercises and reviewed at the start of any active response.
 
@@ -36,7 +36,7 @@ The contact list is stored in a location accessible during incidents, including 
 
 The dedicated incident channels are established and tested:
 
-A defined chat channel for incident coordination (Teams, Slack, or equivalent). A defined email distribution list for incident updates. A defined conference bridge or video meeting room for verbal coordination. A separately-managed channel for use if the primary company systems are unavailable.
+A defined chat channel for incident coordination on the company's chat platform. A defined email distribution list for incident updates. A defined conference bridge or video meeting room for verbal coordination. A separately-managed channel that does not depend on the company's identity provider, email, or chat platform, for use when those systems are unavailable or may be compromised. Account compromise of an administrator, ransomware, and BEC all move to this channel by default.
 
 ### 2.3 Tools and Access
 
@@ -50,11 +50,19 @@ Access for the response team is reviewed quarterly to confirm it remains current
 
 The standing authority matrix described in POL-IR-001 Section 3.5 is current. The matrix specifies pre-authorized actions, scope limits, named approvers, and rollback procedures. The response team references the matrix to determine which actions can be taken immediately versus which require approval.
 
-## 3. The First Fifteen Minutes of Any Incident
+### 2.5 Output Artifacts
+
+Every declared incident produces the same set of records. The running record of decisions and actions, started when the incident is declared (Section 3.1.2). The evidence package, preserved under POL-IR-001 Section 3.8 and retained per STD-LOG-001. The communications sent, kept with the running record. The post-incident review (Section 4) for incidents at Medium severity or higher.
+
+## 3. Procedure
+
+The procedure runs in four phases. Phase 1 applies to every incident. Phase 2 runs the playbook that matches the incident type. Phases 3 and 4 cover the communication and escalation decisions that come up in every playbook, and run alongside Phase 2 rather than after it.
+
+### 3.1 Phase 1: The First Fifteen Minutes
 
 Regardless of incident type, the first fifteen minutes follow the same pattern.
 
-### 3.1 Triage the Report
+#### 3.1.1 Triage the Report
 
 The reported event is reviewed to determine whether it meets the threshold for incident declaration. The triage answers three questions:
 
@@ -66,25 +74,27 @@ What severity tier likely applies? Initial severity assignment per POL-IR-001 Se
 
 If the situation does not meet the threshold for incident declaration, document the triage decision and close the report. If the situation does meet the threshold, declare the incident and proceed.
 
-### 3.2 Establish Coordination
+#### 3.1.2 Establish Coordination
 
 Open the dedicated incident channel. Note the time of declaration. Begin a running record of decisions and actions; this becomes the basis for the post-incident review and any required external reporting.
 
 For Critical incidents, notify the executive sponsor immediately. For High incidents, the notification can occur within the four-hour window per POL-IR-001 Section 3.2.
 
-### 3.3 Activate the Appropriate Playbook
+#### 3.1.3 Activate the Appropriate Playbook
 
-Based on the initial assessment, activate the relevant playbook from Section 4. If the incident type does not cleanly match any of the playbooks, follow the closest match and adapt as needed.
+Based on the initial assessment, activate the relevant playbook from Section 3.2. If the incident type does not cleanly match any of the playbooks, follow the closest match and adapt as needed.
 
-### 3.4 Begin Containment
+#### 3.1.4 Begin Containment
 
 Containment actions defined in the standing authority matrix can begin immediately without further approval. Containment actions outside the matrix require the appropriate approval per the matrix's documented authority structure.
 
 The principle: do not let containment delay slow the response. The longer an attacker has access, the more damage results.
 
-## 4. Incident Type Playbooks
+### 3.2 Phase 2: Run the Playbook
 
-### 4.1 Account Compromise
+Each playbook below follows the response phases in POL-IR-001 Section 3.4: first hour, containment, eradication and recovery, and post-incident. Incidents that do not match a playbook follow the closest one and adapt.
+
+#### 3.2.1 Account Compromise
 
 Account compromise is the most common SMB incident. A user's credentials have been stolen or guessed, and an attacker has used them to access company systems. Common signs include sign-in alerts from unexpected locations, unauthorized inbox rules, unexpected emails sent from the account, financial fraud attempts, and unauthorized access to cloud applications.
 
@@ -98,7 +108,11 @@ Review recent sign-in activity for the account: sign-in locations, IP addresses,
 
 Review inbox rules and forwarding configurations. Attackers commonly create rules that forward, hide, or delete email related to fraud or further attacks. Remove any unauthorized rules.
 
+Review the authentication methods registered on the account. Attackers who complete an adversary-in-the-middle phishing attack commonly register their own MFA method to keep access after a password reset. Remove any method the user did not register.
+
 Review delegations and OAuth grants on the account. Remove any that the user did not authorize.
+
+Revoking sessions invalidates refresh tokens, but access tokens already issued can remain valid until they expire (typically up to an hour) unless the platform supports continuous access evaluation. Keep monitoring the account's sign-in and audit activity through that window.
 
 Check whether the attacker accessed financial systems, HR systems, or other sensitive resources. Each accessed system requires its own review and any necessary further response.
 
@@ -124,7 +138,7 @@ When the response is complete, restore the account with fresh credentials and re
 
 Conduct the post-incident review per POL-IR-001 Section 3.9. Specific lessons to capture: how did the credentials get stolen, what controls would have prevented or caught the compromise sooner, what improvements should be made to authentication or monitoring.
 
-### 4.2 Ransomware
+#### 3.2.2 Ransomware
 
 Ransomware encrypts company files and demands payment for decryption. Common signs include files renamed with ransomware extensions, ransom notes appearing on systems, EDR alerts for ransomware-family activity, users reporting that files cannot be opened.
 
@@ -136,7 +150,7 @@ Isolate affected systems immediately through the EDR platform. Isolation prevent
 
 If multiple systems are affected and the spread is active, isolate broader segments. Network segmentation per POL-NET-001 should limit the blast radius; the response uses that segmentation to contain.
 
-Notify the executive sponsor immediately. Engage the incident response retainer if one is in place. Engage cyber insurance per the policy's notification requirements.
+Notify the executive sponsor immediately. Notify the cyber insurance carrier before engaging outside firms: many policies cover response costs only when the carrier is told first and a panel firm is used. Then engage the incident response retainer, confirming it is a carrier-approved firm.
 
 Notify legal counsel. Some ransomware response decisions (whether to pay, whether to engage with attackers, what to disclose) carry legal implications that warrant counsel from the start.
 
@@ -144,7 +158,7 @@ Preserve evidence. Disk images of affected systems, EDR telemetry, ransom notes,
 
 Confirm the backup status. The most important question early in ransomware response is: do clean backups exist for the affected data, and how recent are they.
 
-**Do not restart, reboot, or shut down affected systems** unless the incident response team specifically directs it. Some ransomware variants are recoverable through memory analysis, and shutdown destroys that opportunity.
+**Do not restart, reboot, or shut down affected systems** unless the incident response team specifically directs it. Memory holds evidence and, for some ransomware variants, encryption keys, and shutdown destroys both. The exception is a system that cannot be isolated from the network: if isolation fails and encryption is spreading, powering the system down to stop the spread takes priority over preserving memory, consistent with CISA's ransomware response guidance.
 
 **Containment:**
 
@@ -172,7 +186,7 @@ The post-incident review for ransomware is substantial and conducted within thir
 
 Specific notification obligations may apply: regulatory notification for affected data, cyber insurance reporting, customer notification per contracts, and law enforcement reporting where appropriate. The notifications are coordinated with legal counsel.
 
-### 4.3 Business Email Compromise (BEC)
+#### 3.2.3 Business Email Compromise (BEC)
 
 BEC is a fraud scheme where an attacker either compromises an executive's email account or impersonates an executive to redirect payments, change wire instructions, or extract sensitive information. Common signs include unusual payment requests from executives, last-minute changes to vendor banking information, urgent requests outside normal business processes, and emails that look subtly off (slightly different sender domain, unusual phrasing).
 
@@ -182,7 +196,7 @@ If money has been transferred or is in transit, contact the bank immediately. So
 
 Determine whether the email account in question is actually compromised (the attacker is operating from inside the legitimate account) or is being impersonated (the attacker is sending mail from a similar-looking external domain). The response differs.
 
-If the account is compromised: follow the account compromise playbook (Section 4.1) and additionally investigate whether other accounts are compromised, whether financial systems were accessed, and whether other fraudulent communications were sent.
+If the account is compromised: follow the account compromise playbook (Section 3.2.1) and additionally investigate whether other accounts are compromised, whether financial systems were accessed, and whether other fraudulent communications were sent.
 
 If the account is impersonated: identify the spoofing pattern (lookalike domain, display name spoofing, internal email address impersonation). Block the malicious sender at the email security platform. Search for and remove similar messages from other recipients' mailboxes.
 
@@ -202,7 +216,7 @@ For compromise: complete the account compromise eradication steps. Verify the at
 
 For impersonation: confirm the email security controls are blocking similar attempts. Review the broader email security posture for gaps the attacker exploited.
 
-If money was lost, work with the bank, cyber insurance, law enforcement, and counsel to pursue recovery. The FBI's IC3 (Internet Crime Complaint Center) is a relevant reporting path for BEC in the United States.
+If money was lost, work with the bank, cyber insurance, law enforcement, and counsel to pursue recovery. In the United States, file a complaint with the FBI's Internet Crime Complaint Center (IC3) as soon as possible; the FBI works with banks to freeze fraudulent domestic wires, and the chance of recovery drops quickly with each day.
 
 **Post-incident:**
 
@@ -212,7 +226,7 @@ Review the email security configuration. DMARC enforcement, sender authenticatio
 
 Conduct awareness training reinforcement on BEC patterns for finance and executive support staff specifically.
 
-### 4.4 Lost or Stolen Device
+#### 3.2.4 Lost or Stolen Device
 
 A company-issued laptop, tablet, phone, or hardware authentication key has been lost, stolen, or otherwise become unaccounted for. The risk depends on what the device contained and what it could access.
 
@@ -254,7 +268,7 @@ For stolen devices, file a police report and document the theft for insurance an
 
 For lost authentication factors, review whether the affected user had appropriate backup authentication paths to avoid being locked out.
 
-### 4.5 Phishing Campaign Response
+#### 3.2.5 Phishing Campaign Response
 
 A phishing campaign targets [ORGANIZATION_NAME] users. Reports come in from multiple users, the email security platform has detected the campaign, or the security team is alerted by external sources. The response addresses both the immediate campaign and the protection of users who may have already responded.
 
@@ -268,7 +282,7 @@ Block the malicious sender at the email gateway and the malicious destination UR
 
 Identify users who interacted with the campaign. Specifically: who clicked the link, who entered credentials, who downloaded an attachment, who replied to the sender. Each interaction has different consequences.
 
-For users who entered credentials: treat as account compromise per Section 4.1, including immediate credential reset and session revocation. Even if the user reports they think they entered the wrong information, treat the credentials as exposed.
+For users who entered credentials: treat as account compromise per Section 3.2.1, including immediate credential reset and session revocation. Even if the user reports they think they entered the wrong information, treat the credentials as exposed.
 
 For users who downloaded an attachment: isolate the affected endpoint immediately through the EDR platform. Investigate for malware execution.
 
@@ -298,11 +312,11 @@ Reinforce awareness training with the specific patterns from this campaign as ex
 
 If the campaign exploited a specific vulnerability (lookalike domain, missing email authentication, weak sender verification), address that vulnerability.
 
-## 5. Communication Templates
+### 3.3 Phase 3: Communicate
 
 The templates below provide starting points for incident communications. Adapt to the specific situation; do not send the templates verbatim.
 
-### 5.1 Executive Notification, Critical Incident
+#### 3.3.1 Executive Notification, Critical Incident
 
 ```
 Subject: Critical Incident Notification - [BRIEF DESCRIPTION]
@@ -323,7 +337,7 @@ Contact me directly at [PHONE] for any executive-level decisions needed.
 [INCIDENT_LEAD_NAME]
 ```
 
-### 5.2 User Communication, Account Compromise
+#### 3.3.2 User Communication, Account Compromise
 
 ```
 Subject: Important: Your account has been temporarily disabled
@@ -344,7 +358,7 @@ Thank you for your patience.
 [IT_FUNCTION_NAME]
 ```
 
-### 5.3 Internal Communication, Active Phishing Campaign
+#### 3.3.3 Internal Communication, Active Phishing Campaign
 
 ```
 Subject: Active phishing campaign - please be aware
@@ -367,27 +381,31 @@ Additional updates will follow as the response progresses.
 [IT_FUNCTION_NAME]
 ```
 
-### 5.4 External Notification Trigger
+#### 3.3.4 External Notification Trigger
 
 External notification is required in specific situations. Triggers include:
 
-Confirmed compromise of personal data subject to privacy regulations. Confirmed compromise of payment card data. Confirmed compromise of health information protected by applicable regulations. Compromise of client data covered by contractual notification obligations. Incidents that may meet cyber insurance reporting thresholds.
+Confirmed compromise of personal data subject to privacy regulations. Confirmed compromise of payment card data. Confirmed compromise of health information protected by applicable regulations. Compromise of client data covered by contractual notification obligations. Incidents that may meet cyber insurance reporting thresholds. Incidents that may be reportable to CISA under CIRCIA once its final rule takes effect (see POL-IR-001 Section 3.6; requirements may change when the rule is finalized).
 
 External notification is coordinated with legal counsel. The specific notification language is drafted with counsel and reviewed by the executive sponsor before sending.
 
-## 6. Decision Frameworks During Incidents
+### 3.4 Phase 4: Escalation Decisions
 
-### 6.1 Whether to Pay Ransom
+Three decisions recur across incident types and are never the response team's to make alone. The team's job is to bring accurate information to the people who make them.
+
+#### 3.4.1 Whether to Pay Ransom
 
 This decision is not the response team's to make alone. The decision is made with executive sponsor, legal counsel, cyber insurance carrier, and ideally the engaged incident response firm.
 
-Factors that argue against payment: legal restrictions in some jurisdictions on payments to sanctioned entities, no guarantee of decryption after payment, risk of marking the organization as a payer that pays again in the future.
+Factors that argue against payment: sanctions risk (in the United States, the Treasury Department's Office of Foreign Assets Control has warned that facilitating payments to sanctioned actors can violate sanctions law regardless of the victim's intent), no guarantee of decryption after payment, and the risk of marking the organization as one that pays.
 
 Factors that argue for payment: critical operational impact when no clean backups exist, regulatory or contractual obligations that cannot be met any other way.
 
 The response team's role is to provide accurate information to support the decision: backup status, decryption viability, business impact, attacker demands. The decision itself is escalated.
 
-### 6.2 Whether to Engage Law Enforcement
+If payment is made, reporting obligations may follow. Once CIRCIA's final rule takes effect, covered critical infrastructure entities will need to report a ransom payment to CISA within twenty-four hours (see POL-IR-001 Section 3.6). Financial services entities regulated by NYDFS already owe the Department notice within twenty-four hours of an extortion payment. Confirm current obligations with counsel before payment, because both the CIRCIA requirements and their effective date may change when the final rule is published.
+
+#### 3.4.2 Whether to Engage Law Enforcement
 
 Engagement with law enforcement is considered for incidents involving:
 
@@ -397,7 +415,7 @@ The decision is made with executive sponsor and legal counsel. Engagement does n
 
 Specific contact paths for law enforcement engagement are documented in the contact list referenced in Section 2.1.
 
-### 6.3 Whether to Disclose Publicly
+#### 3.4.3 Whether to Disclose Publicly
 
 Public disclosure is required by some regulations (state breach notification laws, industry-specific rules, contractual obligations). Public disclosure may also be the right choice even when not required, particularly for incidents where stakeholders are likely to discover the issue independently.
 
@@ -405,7 +423,7 @@ The decision and timing are made with executive sponsor, legal counsel, communic
 
 Premature public disclosure can compromise the response, expose the organization to legal risk, and create unnecessary alarm. The response team does not make this decision unilaterally.
 
-## 7. Post-Incident Activities
+## 4. Analysis and Findings
 
 After the immediate response concludes, the post-incident review is conducted per POL-IR-001 Section 3.9. The review timeline:
 
@@ -415,11 +433,39 @@ The review produces:
 
 A factual timeline of the incident. The classification and reclassification decisions made, with reasoning. The actions taken at each phase. An honest assessment of what worked and what did not. Specific recommendations for program improvements, with named owners and target dates.
 
-The review is a learning exercise, not an exercise in assigning blame. The post-incident review process described in POL-IR-001 Section 3.9 governs.
+The review is a learning exercise, and assigning blame works against it. The post-incident review process described in POL-IR-001 Section 3.9 governs.
 
 Improvement items from the review are tracked through the security program's standard governance processes until completion.
 
-## 8. References
+Findings that cannot be fixed within the review's target dates go to the risk register under POL-GOV-001, so they are tracked and owned rather than left in the review document. Findings that require a temporary deviation from policy go through the exception process.
+
+## 5. Operational Cadence
+
+The runbook is used during incidents, but it only works if it is maintained between them.
+
+Each quarter, the tabletop exercise required by POL-IR-001 Section 3.10, run under RUN-IR-002, confirms the prerequisites in Section 2: the contact list is current, the out-of-band channel works, response access and just-in-time elevation paths work, and the standing authority matrix is current. Each exercise also runs one playbook from Section 3.2 end to end, rotating so that all five are exercised within about fifteen months.
+
+Every six months, matching the review cycle in the metadata table, the Information Security function reviews the runbook against lessons from incidents and exercises, changes to the platforms it names (session revocation, message purge, and device wipe procedures change with vendor releases), and any updates to POL-IR-001.
+
+After every incident at Medium severity or higher, the post-incident review in Section 4 checks whether the playbook used was accurate and complete. Corrections are made within thirty days.
+
+## 6. Automation Opportunities
+
+Most first-hour actions are repeatable and benefit from automation, provided each automated action appears in the standing authority matrix (POL-IR-001 Section 3.5) with its trigger, scope limit, and rollback path. Targets, in priority order:
+
+Account containment on a high-confidence identity alert: block sign-in, revoke sessions, and list the MFA methods, inbox rules, and OAuth grants added during the suspected compromise window for an analyst to review.
+
+Endpoint isolation when the EDR platform detects ransomware behavior, scoped to the affected device.
+
+Phishing search-and-purge when a user-reported message matches a confirmed campaign, scoped to messages matching the confirmed sender and indicators.
+
+Incident record creation on declaration: the incident channel, the running record, and the ticket, opened together with the declaration time stamped.
+
+Evidence collection: export of the affected account's sign-in and audit logs for the compromise window into the evidence store, so the record exists before any log retention window closes.
+
+Actions that cannot be scoped and rolled back stay manual, consistent with POL-IR-001 Section 3.5.
+
+## 7. References
 
 ### Related Documents in This Library
 
@@ -427,9 +473,9 @@ POL-IR-001: Incident Response Policy (the parent policy this runbook operational
 
 POL-IAM-001: Access Control Policy (account management)
 
-POL-IAM-002: Password and Authentication Standard (credential rotation)
+STD-IAM-001: Password and Authentication Standard (credential rotation)
 
-POL-IAM-011: Non-Human Identity Governance Policy (service account incidents)
+POL-IAM-003: Non-Human Identity Governance Policy (service account incidents)
 
 POL-AM-001: Asset Management Policy (asset-aware response)
 
@@ -443,7 +489,13 @@ POL-NET-001: Network Security Policy (network containment)
 
 POL-TPRM-001: Third-Party Risk Management Policy (vendor incident coordination)
 
-[LOGGING_AND_MONITORING_STANDARD]: Logging and Monitoring Standard (forthcoming, evidence retention)
+RUN-IR-002: Tabletop Exercise Facilitation Runbook (exercises that test these playbooks)
+
+STD-DR-001: Data Backup and Recovery Standard (ransomware recovery)
+
+STD-NET-001: Email and Web Browser Protection Standard (phishing and BEC prevention)
+
+STD-LOG-001: Logging and Monitoring Standard (evidence retention)
 
 ### External Resources
 
@@ -451,11 +503,11 @@ CISA (Cybersecurity and Infrastructure Security Agency) provides current threat 
 
 The FBI Internet Crime Complaint Center (IC3) at ic3.gov is the reporting path for BEC, ransomware, and other internet-based crimes in the United States.
 
-NIST SP 800-61 (Computer Security Incident Handling Guide) provides foundational incident response framework that POL-IR-001 and this runbook are consistent with.
+NIST SP 800-61 Revision 3 (Incident Response Recommendations and Considerations for Cybersecurity Risk Management, April 2025) organizes incident response around the NIST CSF 2.0 functions. POL-IR-001 and this runbook are consistent with it; the six phases in POL-IR-001 expand the four-phase incident life cycle from the earlier Revision 2.
 
 Industry-specific Information Sharing and Analysis Centers (ISACs) provide sector-specific threat intelligence and incident response support.
 
-## 9. Revision History
+## 8. Revision History
 
 | Version | Date | Author | Description |
 |---------|------|--------|-------------|
@@ -463,4 +515,6 @@ Industry-specific Information Sharing and Analysis Centers (ISACs) provide secto
 
 ---
 
-*This runbook is issued under the authority of the executive sponsor named in POL-IR-001. Adopted from `github.com/pslorenz/security-policy-templates`, distributed under Creative Commons Attribution-ShareAlike 4.0.*
+*This runbook is issued under the authority of the executive sponsor named in POL-IR-001.*
+
+*Adopted from `github.com/pslorenz/security-policy-templates` (CC BY 4.0). Organizations adopting this document for their own use may remove this line.*
